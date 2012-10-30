@@ -100,6 +100,10 @@
 - (void)handleSingleTap:(UIGestureRecognizer *)gestureRecognizer {
     // single tap does nothing for now
 //    [self logLayout];
+    
+    if (self.photoViewDelegate != nil) {
+        [self.photoViewDelegate photoViewDidSingleTap:self];
+    }
 }
 
 - (void)handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
@@ -114,6 +118,10 @@
         if (self.zoomScale != newScale)
             [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
     }
+    
+    if (self.photoViewDelegate != nil) {
+        [self.photoViewDelegate photoViewDidDoubleTap:self];
+    }
 }
 
 - (void)handleTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
@@ -122,6 +130,10 @@
     
     if (self.zoomScale != newScale)
         [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
+    
+    if (self.photoViewDelegate != nil) {
+        [self.photoViewDelegate photoViewDidTwoFingerTap:self];
+    }
 }
 
 #pragma mark - Support Methods

@@ -8,8 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PZPhotoViewDelegate;
+
 @interface PZPhotoView : UIScrollView
 
+@property(assign, nonatomic) id<PZPhotoViewDelegate> photoViewDelegate;
+
 - (void)displayImage:(UIImage *)image;
+
+@end
+
+@protocol PZPhotoViewDelegate <NSObject>
+
+@optional
+
+- (void)photoViewDidSingleTap:(PZPhotoView *)photoView;
+- (void)photoViewDidDoubleTap:(PZPhotoView *)photoView;
+- (void)photoViewDidTwoFingerTap:(PZPhotoView *)photoView;
 
 @end
