@@ -63,6 +63,7 @@
 		269FEE58163C735100EB8347 /* WeCanDoIt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeCanDoIt.png; sourceTree = "<group>"; };
 		269FEE63163CA97800EB8347 /* PZPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPhotoView.h; sourceTree = "<group>"; };
 		269FEE64163CA97800EB8347 /* PZPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPhotoView.m; sourceTree = "<group>"; };
+		269FEE6A163F7CD000EB8347 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +93,7 @@
 		269FEE0E163C714600EB8347 = {
 			isa = PBXGroup;
 			children = (
+				269FEE6A163F7CD000EB8347 /* README.md */,
 				269FEE23163C714600EB8347 /* PhotoZoom */,
 				269FEE47163C714600EB8347 /* PhotoZoomTests */,
 				269FEE1C163C714600EB8347 /* Frameworks */,
@@ -458,6 +460,7 @@
 				269FEE54163C714600EB8347 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		269FEE55163C714600EB8347 /* Build configuration list for PBXNativeTarget "PhotoZoomTests" */ = {
 			isa = XCConfigurationList;
@@ -466,6 +469,7 @@
 				269FEE57163C714600EB8347 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

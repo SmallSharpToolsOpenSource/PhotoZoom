@@ -89,6 +89,8 @@
     [self.imageView addGestureRecognizer:doubleTap];
     [self.imageView addGestureRecognizer:twoFingerTap];
     
+    self.contentSize = self.imageView.frame.size;
+    
     [self setMaxMinZoomScalesForCurrentBounds:FALSE];
 }
 
@@ -97,7 +99,7 @@
 
 - (void)handleSingleTap:(UIGestureRecognizer *)gestureRecognizer {
     // single tap does nothing for now
-    [self logLayout];
+//    [self logLayout];
 }
 
 - (void)handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
@@ -147,13 +149,11 @@
     //    At a zoom scale of 1.0, it would be the size of the imageScrollView's bounds.
     //    As the zoom scale decreases, so more content is visible, the size of the rect grows.
     if (isPortait) {
-        DebugLog(@"Portrait");
-        zoomRect.size.width  = self.frame.size.width  / scale;
+        zoomRect.size.width = self.frame.size.width / scale;
         zoomRect.size.height = self.frame.size.height / scale;
     }
     else {
-        DebugLog(@"Landcape (reversed height and width)");
-        zoomRect.size.width  = self.frame.size.height  / scale;
+        zoomRect.size.width = self.frame.size.height / scale;
         zoomRect.size.height = self.frame.size.width / scale;
     }
     

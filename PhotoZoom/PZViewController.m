@@ -10,11 +10,6 @@
 
 #import "PZPhotoView.h"
 
-#define kZoomStep 1.5
-
-//@interface PZViewController ()
-//@end
-
 @implementation PZViewController
 
 #pragma mark - View Lifecycle
@@ -29,10 +24,6 @@
         [photoView displayImage:[UIImage imageNamed:@"WeCanDoIt.png"]];
     }
 }
-
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//}
 
 #pragma mark - Orientation
 #pragma mark -
