@@ -21,7 +21,7 @@
     
     if ([self.view isKindOfClass:[PZPhotoView class]]) {
         PZPhotoView *photoView = (PZPhotoView *)self.view;
-        [photoView displayImage:[UIImage imageNamed:@"LegoStormtrooper.jpg"]];
+        [photoView displayImage:[UIImage imageNamed:@"Box.png"]];
     }
 }
 
