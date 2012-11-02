@@ -19,6 +19,7 @@
 @implementation PZPhotoView {
     CGPoint  _pointToCenterAfterResize;
     CGFloat  _scaleToRestoreAfterResize;
+    CGSize   _imageSize;
 }
 
 - (void)layoutSubviews {
@@ -71,6 +72,8 @@
     
     self.bouncesZoom = TRUE;
     
+    _imageSize = image.size;
+    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
     [self addSubview:imageView];
@@ -91,16 +94,14 @@
     
     self.contentSize = self.imageView.frame.size;
     
-    [self setMaxMinZoomScalesForCurrentBounds:FALSE];
+    [self setMaxMinZoomScalesForCurrentBounds];
+    [self setZoomScale:self.minimumZoomScale animated:FALSE];
 }
 
 #pragma mark - Gestures
 #pragma mark -
 
 - (void)handleSingleTap:(UIGestureRecognizer *)gestureRecognizer {
-    // single tap does nothing for now
-//    [self logLayout];
-    
     if (self.photoViewDelegate != nil) {
         [self.photoViewDelegate photoViewDidSingleTap:self];
     }
@@ -139,11 +140,20 @@
 #pragma mark - Support Methods
 #pragma mark -
 
+- (void)updateZoomScale:(CGFloat)newScale {
+    CGPoint center = CGPointMake(_imageSize.width / 2.0, _imageSize.height / 2.0);
+    [self updateZoomScale:newScale withCenter:center];
+}
+
 - (void)updateZoomScaleWithGesture:(UIGestureRecognizer *)gestureRecognizer newScale:(CGFloat)newScale {
+    CGPoint center = [gestureRecognizer locationInView:gestureRecognizer.view];
+    [self updateZoomScale:newScale withCenter:center];
+}
+
+- (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center {
     assert(newScale >= self.minimumZoomScale);
     assert(newScale <= self.maximumZoomScale);
-    
-    CGPoint center = [gestureRecognizer locationInView:gestureRecognizer.view];
+
     CGRect zoomRect = [self zoomRectForScale:newScale withCenter:center];
     [self zoomToRect:zoomRect animated:YES];
 }
@@ -152,75 +162,45 @@
     assert(scale >= self.minimumZoomScale);
     assert(scale <= self.maximumZoomScale);
     
-    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    BOOL isPortait = !UIDeviceOrientationIsLandscape(deviceOrientation);
-    
     CGRect zoomRect;
     
     // the zoom rect is in the content view's coordinates.
-    //    At a zoom scale of 1.0, it would be the size of the imageScrollView's bounds.
-    //    As the zoom scale decreases, so more content is visible, the size of the rect grows.
-    if (isPortait) {
-        zoomRect.size.width = self.frame.size.width / scale;
-        zoomRect.size.height = self.frame.size.height / scale;
-    }
-    else {
-        zoomRect.size.width = self.frame.size.height / scale;
-        zoomRect.size.height = self.frame.size.width / scale;
-    }
+    zoomRect.size.width = self.frame.size.width / scale;
+    zoomRect.size.height = self.frame.size.height / scale;
     
     // choose an origin so as to get the right center.
-    if (scale == self.minimumZoomScale) {
-        CGSize boundsSize = self.bounds.size;
-        
-        // center the zoom view as it becomes smaller than the size of the screen
-
-        // center horizontally
-        if ((zoomRect.size.width * scale) < boundsSize.width)
-            zoomRect.origin.x = (boundsSize.width - zoomRect.size.width) / 2;
-        else
-            zoomRect.origin.x = 0;
-        
-        // center vertically
-        if ((zoomRect.size.height * scale) < boundsSize.height)
-            zoomRect.origin.y = (boundsSize.height - zoomRect.size.height) / 2;
-        else
-            zoomRect.origin.y = 0;
-    }
-    else {
-        zoomRect.origin.x = center.x - (zoomRect.size.width / 2.0);
-        zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
-    }
+    zoomRect.origin.x = center.x - (zoomRect.size.width / 2.0);
+    zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
     
     return zoomRect;
 }
 
-- (void)setMaxMinZoomScalesForCurrentBounds:(BOOL)animated {
+- (void)setMaxMinZoomScalesForCurrentBounds {
     // calculate minimum scale to perfectly fit image width, and begin at that scale
     CGSize boundsSize = self.bounds.size;
-    CGSize imageSize = self.imageView.frame.size;
-    
-    // calculate min/max zoomscale
-    CGFloat xScale = boundsSize.width  / imageSize.width;    // the scale needed to perfectly fit the image width-wise
-    CGFloat yScale = boundsSize.height / imageSize.height;   // the scale needed to perfectly fit the image height-wise
-    
-    // fill width if the image and phone are both portrait or both landscape; otherwise take smaller scale
-    BOOL imagePortrait = imageSize.height > imageSize.width;
-    BOOL phonePortrait = boundsSize.height > boundsSize.width;
-    CGFloat minScale = imagePortrait == phonePortrait ? xScale : MIN(xScale, yScale);
     
     // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
     // maximum zoom scale to 0.5.
     CGFloat maxScale = 1.0 / [[UIScreen mainScreen] scale];
     
+    CGFloat minScale  = maxScale; // default
+    
+    // calculate min/max zoomscale
+    CGFloat xScale = boundsSize.width  / _imageSize.width;    // the scale needed to perfectly fit the image width-wise
+    CGFloat yScale = boundsSize.height / _imageSize.height;   // the scale needed to perfectly fit the image height-wise
+
+    // fill width if the image and phone are both portrait or both landscape; otherwise take smaller scale
+    BOOL imagePortrait = _imageSize.height > _imageSize.width;
+    BOOL phonePortrait = boundsSize.height > boundsSize.width;
+    minScale = imagePortrait == phonePortrait ? xScale : MIN(xScale, yScale);
+    
     // don't let minScale exceed maxScale. (If the image is smaller than the screen, we don't want to force it to be zoomed.)
     if (minScale > maxScale) {
-        minScale = maxScale;
+        minScale = maxScale / 2.0;
     }
     
     self.maximumZoomScale = maxScale;
     self.minimumZoomScale = minScale;
-    [self setZoomScale:minScale animated:animated];
 }
 
 - (void)prepareToResize {
@@ -236,7 +216,7 @@
 }
 
 - (void)recoverFromResizing {
-    [self setMaxMinZoomScalesForCurrentBounds:FALSE];
+    [self setMaxMinZoomScalesForCurrentBounds];
     
     // Step 1: restore zoom scale, first making sure it is within the allowable range.
     CGFloat maxZoomScale = MAX(self.minimumZoomScale, _scaleToRestoreAfterResize);
@@ -274,32 +254,11 @@
     return CGPointZero;
 }
 
-- (void)logLayout {
-    DebugLog(@"Bounds: %f, %f : %f, %f", self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
-    DebugLog(@"Frame: %f, %f : %f, %f", self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
-    DebugLog(@"Image: %f/%f, %f/%f", self.imageView.frame.size.width, self.imageView.frame.size.width * self.zoomScale,
-             self.imageView.frame.size.height, self.imageView.frame.size.height * self.zoomScale);
-    DebugLog(@"Scale: %f : %f, %f", self.zoomScale, self.minimumZoomScale, self.maximumZoomScale);
-    DebugLog(@"Scroll View: %f, %f : %f, %f",
-             self.frame.origin.x, self.frame.origin.y,
-             self.frame.size.width, self.frame.size.height);
-    DebugLog(@"Content Size: %f, %f", self.contentSize.width, self.contentSize.height);
-    DebugLog(@"Content Offset: %f, %f", self.contentOffset.x, self.contentOffset.y);
-    
-    DebugLog(@"Image View: %f, %f : %f, %f",
-             self.imageView.frame.origin.x, self.imageView.frame.origin.y,
-             self.imageView.frame.size.width, self.imageView.frame.size.height);
-}
-
 #pragma mark - UIScrollViewDelegate Methods
 #pragma mark -
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
-}
-
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale {
-//    DebugLog(@"scrollViewDidEndZooming: %f", scale);
 }
 
 @end

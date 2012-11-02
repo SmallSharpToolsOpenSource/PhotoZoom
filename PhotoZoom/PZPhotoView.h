@@ -16,6 +16,9 @@
 
 - (void)displayImage:(UIImage *)image;
 
+- (void)updateZoomScale:(CGFloat)newScale;
+- (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center;
+
 @end
 
 @protocol PZPhotoViewDelegate <NSObject>
