@@ -28,5 +28,6 @@
 - (void)photoViewDidSingleTap:(PZPhotoView *)photoView;
 - (void)photoViewDidDoubleTap:(PZPhotoView *)photoView;
 - (void)photoViewDidTwoFingerTap:(PZPhotoView *)photoView;
+- (void)photoViewDidDoubleTwoFingerTap:(PZPhotoView *)photoView;
 
 @end

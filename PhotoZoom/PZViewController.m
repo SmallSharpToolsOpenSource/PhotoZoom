@@ -32,6 +32,8 @@
         [photoView displayImage:[UIImage imageNamed:@"Box.png"]];
     }
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
+    
     self.navigationController.toolbar.translucent = TRUE;
     self.navigationController.toolbar.tintColor = [UIColor grayColor];
     self.navigationController.navigationBar.translucent = TRUE;
@@ -121,6 +123,61 @@
     }
 }
 
+- (void)logRect:(CGRect)rect withName:(NSString *)name {
+    DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+}
+
+- (void)logLayout {
+    [self logRect:self.view.bounds withName:@"scroll view bounds"];
+    [self logRect:self.view.frame withName:@"scroll view frame"];
+    
+    UIView *imageView = [self.view.subviews objectAtIndex:0];
+    [self logRect:imageView.bounds withName:@"image bounds"];
+    [self logRect:imageView.frame withName:@"image frame"];
+    
+    PZPhotoView *photoView = (PZPhotoView *)self.view;
+    DebugLog(@"content size: %f, %f", photoView.contentSize.width, photoView.contentSize.height);
+    DebugLog(@"content offset: %f, %f", photoView.contentOffset.x, photoView.contentOffset.y);
+    DebugLog(@"content inset: %f, %f, %f, %f", photoView.contentInset.top, photoView.contentInset.right, photoView.contentInset.bottom, photoView.contentInset.left);
+}
+
+- (void)toggleNavigationVisibility {
+    CGFloat duration = UINavigationControllerHideShowBarDuration;
+    
+    if (self.navigationController.navigationBar.hidden) {
+        // fade in navigation
+        self.navigationController.navigationBar.alpha = 0.0;
+        self.navigationController.navigationBar.hidden = FALSE;
+        self.navigationController.toolbar.alpha = 0.0;
+        self.navigationController.toolbar.hidden = FALSE;
+        UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
+        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+            [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
+            self.navigationController.navigationBar.alpha = 1.0;
+            self.navigationController.toolbar.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [self.view setNeedsLayout];
+        }];
+    }
+    else {
+        // fade out navigation
+        self.navigationController.navigationBar.alpha = 1.0;
+        self.navigationController.navigationBar.hidden = FALSE;
+        self.navigationController.toolbar.alpha = 1.0;
+        self.navigationController.toolbar.hidden = FALSE;
+        UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
+        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+            [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationNone];
+            self.navigationController.navigationBar.alpha = 0.0;
+            self.navigationController.toolbar.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.navigationController.navigationBar.hidden = TRUE;
+            self.navigationController.toolbar.hidden = TRUE;
+            [self.view setNeedsLayout];
+        }];
+    }
+}
+
 #pragma mark - Orientation
 #pragma mark -
 
@@ -144,15 +201,19 @@
 #pragma mark -
 
 - (void)photoViewDidSingleTap:(PZPhotoView *)photoView {
-    DebugLog(@"photoViewDidSingleTap");
-    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden animated:TRUE];
-    [self.navigationController setToolbarHidden:!self.navigationController.toolbarHidden animated:TRUE];
+    [self toggleNavigationVisibility];
 }
 
 - (void)photoViewDidDoubleTap:(PZPhotoView *)photoView {
+    // do nothing
 }
 
 - (void)photoViewDidTwoFingerTap:(PZPhotoView *)photoView {
+    // do nothing
+}
+
+- (void)photoViewDidDoubleTwoFingerTap:(PZPhotoView *)photoView {
+    [self logLayout];
 }
 
 @end

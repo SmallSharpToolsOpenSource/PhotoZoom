@@ -19,7 +19,6 @@
 @implementation PZPhotoView {
     CGPoint  _pointToCenterAfterResize;
     CGFloat  _scaleToRestoreAfterResize;
-    CGSize   _imageSize;
 }
 
 - (void)layoutSubviews {
@@ -43,13 +42,20 @@
 
     self.imageView.frame = frameToCenter;
     
+    CGPoint contentOffset = self.contentOffset;
+    
     // ensure horizontal offset is reasonable
     if (frameToCenter.origin.x != 0.0)
-        self.contentOffset = CGPointMake(0.0, self.contentOffset.y);
+        contentOffset.x = 0.0;
     
     // ensure vertical offset is reasonable
     if (frameToCenter.origin.y != 0.0)
-        self.contentOffset = CGPointMake(self.contentOffset.x, 0.0);
+        contentOffset.y = 0.0;
+    
+    self.contentOffset = contentOffset;
+    
+    // ensure content insert is zeroed out using translucent navigation bars
+    self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -66,15 +72,6 @@
     }
 }
 
-//- (void)zoomToRect:(CGRect)rect animated:(BOOL)animated {
-//    DebugLog(@"zoomToRect: %f, %f / %f, %f", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-//    [super zoomToRect:rect animated:animated];
-//}
-
-//- (void)logRect:(CGRect)rect withName:(NSString *)name {
-//    DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-//}
-
 #pragma mark - Public Implementation
 #pragma mark -
 
@@ -89,8 +86,6 @@
     
     self.bouncesZoom = TRUE;
     
-    _imageSize = image.size;
-    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
     [self addSubview:imageView];
@@ -100,19 +95,27 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     UITapGestureRecognizer *twoFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerTap:)];
+    UITapGestureRecognizer *doubleTwoFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTwoFingerTap:)];
     
-    [singleTap requireGestureRecognizerToFail:doubleTap];
     [doubleTap setNumberOfTapsRequired:2];
     [twoFingerTap setNumberOfTouchesRequired:2];
+    [doubleTwoFingerTap setNumberOfTapsRequired:2];
+    [doubleTwoFingerTap setNumberOfTouchesRequired:2];
+
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [twoFingerTap requireGestureRecognizerToFail:doubleTwoFingerTap];
     
     [self.imageView addGestureRecognizer:singleTap];
     [self.imageView addGestureRecognizer:doubleTap];
     [self.imageView addGestureRecognizer:twoFingerTap];
+    [self.imageView addGestureRecognizer:doubleTwoFingerTap];
     
     self.contentSize = self.imageView.frame.size;
     
     [self setMaxMinZoomScalesForCurrentBounds];
     [self setZoomScale:self.minimumZoomScale animated:FALSE];
+    
+    self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
 }
 
 #pragma mark - Gestures
@@ -154,11 +157,17 @@
     }
 }
 
+- (void)handleDoubleTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.photoViewDelegate != nil) {
+        [self.photoViewDelegate photoViewDidDoubleTwoFingerTap:self];
+    }
+}
+
 #pragma mark - Support Methods
 #pragma mark -
 
 - (void)updateZoomScale:(CGFloat)newScale {
-    CGPoint center = CGPointMake(_imageSize.width / 2.0, _imageSize.height / 2.0);
+    CGPoint center = CGPointMake(self.imageView.bounds.size.width/ 2.0, self.imageView.bounds.size.height / 2.0);
     [self updateZoomScale:newScale withCenter:center];
 }
 
@@ -203,11 +212,11 @@
     CGFloat minScale  = maxScale; // default
     
     // calculate min/max zoomscale
-    CGFloat xScale = boundsSize.width  / _imageSize.width;    // the scale needed to perfectly fit the image width-wise
-    CGFloat yScale = boundsSize.height / _imageSize.height;   // the scale needed to perfectly fit the image height-wise
+    CGFloat xScale = boundsSize.width  / self.imageView.bounds.size.width;    // the scale needed to perfectly fit the image width-wise
+    CGFloat yScale = boundsSize.height / self.imageView.bounds.size.height;   // the scale needed to perfectly fit the image height-wise
 
     // fill width if the image and phone are both portrait or both landscape; otherwise take smaller scale
-    BOOL imagePortrait = _imageSize.height > _imageSize.width;
+    BOOL imagePortrait = self.imageView.bounds.size.height > self.imageView.bounds.size.width;
     BOOL phonePortrait = boundsSize.height > boundsSize.width;
     minScale = imagePortrait == phonePortrait ? xScale : MIN(xScale, yScale);
     
