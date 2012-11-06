@@ -42,8 +42,14 @@
         frameToCenter.origin.y = 0;
 
     self.imageView.frame = frameToCenter;
-    if (frameToCenter.origin.x != 0.0 || frameToCenter.origin.y != 0.0)
-        self.contentOffset = CGPointMake(0.0, 0.0);
+    
+    // ensure horizontal offset is reasonable
+    if (frameToCenter.origin.x != 0.0)
+        self.contentOffset = CGPointMake(0.0, self.contentOffset.y);
+    
+    // ensure vertical offset is reasonable
+    if (frameToCenter.origin.y != 0.0)
+        self.contentOffset = CGPointMake(self.contentOffset.x, 0.0);
 }
 
 - (void)setFrame:(CGRect)frame {

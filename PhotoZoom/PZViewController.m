@@ -34,8 +34,23 @@
     
     self.navigationController.toolbar.translucent = TRUE;
     self.navigationController.toolbar.tintColor = [UIColor grayColor];
+    self.navigationController.navigationBar.translucent = TRUE;
+    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     [self setToolbarItems:self.customToolbarItems animated:FALSE];
-    [self.navigationController setToolbarHidden:FALSE];
+    
+    self.navigationController.navigationBar.hidden = FALSE;
+    self.navigationController.toolbar.hidden = FALSE;
+    [self.navigationController setNavigationBarHidden:FALSE animated:FALSE];
+    [self.navigationController setToolbarHidden:FALSE animated:FALSE];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (NSArray *)customToolbarItems {
@@ -130,6 +145,7 @@
 
 - (void)photoViewDidSingleTap:(PZPhotoView *)photoView {
     DebugLog(@"photoViewDidSingleTap");
+    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden animated:TRUE];
     [self.navigationController setToolbarHidden:!self.navigationController.toolbarHidden animated:TRUE];
 }
 
