@@ -42,6 +42,8 @@
         frameToCenter.origin.y = 0;
 
     self.imageView.frame = frameToCenter;
+    if (frameToCenter.origin.x != 0.0 || frameToCenter.origin.y != 0.0)
+        self.contentOffset = CGPointMake(0.0, 0.0);
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -57,6 +59,15 @@
         [self recoverFromResizing];
     }
 }
+
+//- (void)zoomToRect:(CGRect)rect animated:(BOOL)animated {
+//    DebugLog(@"zoomToRect: %f, %f / %f, %f", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+//    [super zoomToRect:rect animated:animated];
+//}
+
+//- (void)logRect:(CGRect)rect withName:(NSString *)name {
+//    DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+//}
 
 #pragma mark - Public Implementation
 #pragma mark -
