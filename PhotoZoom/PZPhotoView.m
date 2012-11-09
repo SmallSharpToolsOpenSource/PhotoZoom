@@ -43,6 +43,18 @@
     self.decelerationRate = UIScrollViewDecelerationRateFast;
     
     self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    
+    UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollViewDoubleTap:)];
+    [scrollViewDoubleTap setNumberOfTapsRequired:2];
+    [self addGestureRecognizer:scrollViewDoubleTap];
+    
+    UITapGestureRecognizer *scrollViewTwoFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollViewTwoFingerTap:)];
+    [scrollViewTwoFingerTap setNumberOfTouchesRequired:2];
+    [self addGestureRecognizer:scrollViewTwoFingerTap];
+    
+    UITapGestureRecognizer *scrollViewSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollViewSingleTap:)];
+    [scrollViewSingleTap requireGestureRecognizerToFail:scrollViewDoubleTap];
+    [self addGestureRecognizer:scrollViewSingleTap];
 }
 
 - (void)layoutSubviews {
@@ -160,10 +172,8 @@
     }
     else {
         // double tap zooms in
-        CGFloat newScale = MIN([self zoomScale] * kZoomStep, self.maximumZoomScale);
-        
-        if (self.zoomScale != newScale)
-            [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
+        CGFloat newScale = MIN(self.zoomScale * kZoomStep, self.maximumZoomScale);
+        [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
     }
     
     if (self.photoViewDelegate != nil) {
@@ -174,9 +184,7 @@
 - (void)handleTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
     // two-finger tap zooms out
     CGFloat newScale = MAX([self zoomScale] / kZoomStep, self.minimumZoomScale);
-    
-    if (self.zoomScale != newScale)
-        [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
+    [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
     
     if (self.photoViewDelegate != nil) {
         [self.photoViewDelegate photoViewDidTwoFingerTap:self];
@@ -187,6 +195,54 @@
     if (self.photoViewDelegate != nil) {
         [self.photoViewDelegate photoViewDidDoubleTwoFingerTap:self];
     }
+}
+
+- (void)handleScrollViewSingleTap:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.photoViewDelegate != nil) {
+        [self.photoViewDelegate photoViewDidSingleTap:self];
+    }
+}
+
+- (void)handleScrollViewDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.imageView.image == nil) return;
+    CGPoint center =[self adjustPointIntoImageView:[gestureRecognizer locationInView:gestureRecognizer.view]];
+    
+    if (!CGPointEqualToPoint(center, CGPointZero)) {
+        CGFloat newScale = MIN([self zoomScale] * kZoomStep, self.maximumZoomScale);
+        [self updateZoomScale:newScale withCenter:center];
+    }
+}
+
+- (void)handleScrollViewTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.imageView.image == nil) return;
+    CGPoint center =[self adjustPointIntoImageView:[gestureRecognizer locationInView:gestureRecognizer.view]];
+    
+    if (!CGPointEqualToPoint(center, CGPointZero)) {
+        CGFloat newScale = MAX([self zoomScale] / kZoomStep, self.minimumZoomScale);
+        [self updateZoomScale:newScale withCenter:center];
+    }
+}
+
+- (CGPoint)adjustPointIntoImageView:(CGPoint)center {
+    BOOL contains = CGRectContainsPoint(self.imageView.frame, center);
+    
+    if (!contains) {
+        center.x = center.x / self.zoomScale;
+        center.y = center.y / self.zoomScale;
+        
+        // adjust center with bounds and scale to be a point within the image view bounds
+        CGRect imageViewBounds = self.imageView.bounds;
+        
+        center.x = MAX(center.x, imageViewBounds.origin.x);
+        center.x = MIN(center.x, imageViewBounds.origin.x + imageViewBounds.size.height);
+        
+        center.y = MAX(center.y, imageViewBounds.origin.y);
+        center.y = MIN(center.y, imageViewBounds.origin.y + imageViewBounds.size.width);
+        
+        return center;
+    }
+    
+    return CGPointZero;
 }
 
 #pragma mark - Support Methods
@@ -206,8 +262,10 @@
     assert(newScale >= self.minimumZoomScale);
     assert(newScale <= self.maximumZoomScale);
 
-    CGRect zoomRect = [self zoomRectForScale:newScale withCenter:center];
-    [self zoomToRect:zoomRect animated:YES];
+    if (self.zoomScale != newScale) {
+        CGRect zoomRect = [self zoomRectForScale:newScale withCenter:center];
+        [self zoomToRect:zoomRect animated:YES];
+    }
 }
 
 - (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
