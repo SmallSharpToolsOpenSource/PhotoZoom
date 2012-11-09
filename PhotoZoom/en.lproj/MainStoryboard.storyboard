@@ -44,14 +44,6 @@
             <point key="canvasLocation" x="-4" y="-25"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="PZPhotoView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PZPhotoView.h"/>
-        </class>
-        <class className="PZViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PZViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -21,6 +21,30 @@
     CGFloat  _scaleToRestoreAfterResize;
 }
 
+- (id)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        [self setupView];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self setupView];
+}
+
+- (void)setupView {
+    self.delegate = self;
+    self.imageView = nil;
+    
+    self.showsVerticalScrollIndicator = NO;
+    self.showsHorizontalScrollIndicator = NO;
+    self.bouncesZoom = TRUE;
+    self.decelerationRate = UIScrollViewDecelerationRateFast;
+    
+    self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
 
@@ -81,11 +105,6 @@
         [view removeFromSuperview];
     }
     
-    self.delegate = self;
-    self.imageView = nil;
-    
-    self.bouncesZoom = TRUE;
-    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
     [self addSubview:imageView];
@@ -101,7 +120,7 @@
     [twoFingerTap setNumberOfTouchesRequired:2];
     [doubleTwoFingerTap setNumberOfTapsRequired:2];
     [doubleTwoFingerTap setNumberOfTouchesRequired:2];
-
+    
     [singleTap requireGestureRecognizerToFail:doubleTap];
     [twoFingerTap requireGestureRecognizerToFail:doubleTwoFingerTap];
     
@@ -115,7 +134,14 @@
     [self setMaxMinZoomScalesForCurrentBounds];
     [self setZoomScale:self.minimumZoomScale animated:FALSE];
     
-    self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    // prepare the layout for full screen when status bar, navigation bar and toolbar/tabbar are hidden
+    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        CGRect frame = self.frame;
+        frame.origin.y = -20.0; // move up under translucent status bar
+        frame.size.height = applicationFrame.size.height + 20.0; // increase height
+        self.frame = frame;
+    });
 }
 
 #pragma mark - Gestures

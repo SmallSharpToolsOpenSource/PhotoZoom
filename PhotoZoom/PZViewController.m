@@ -135,13 +135,16 @@
     [self logRect:imageView.bounds withName:@"image bounds"];
     [self logRect:imageView.frame withName:@"image frame"];
     
+    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
+    [self logRect:applicationFrame withName:@"application frame"];
+    
     PZPhotoView *photoView = (PZPhotoView *)self.view;
     DebugLog(@"content size: %f, %f", photoView.contentSize.width, photoView.contentSize.height);
     DebugLog(@"content offset: %f, %f", photoView.contentOffset.x, photoView.contentOffset.y);
     DebugLog(@"content inset: %f, %f, %f, %f", photoView.contentInset.top, photoView.contentInset.right, photoView.contentInset.bottom, photoView.contentInset.left);
 }
 
-- (void)toggleNavigationVisibility {
+- (void)toggleFullScreen {
     CGFloat duration = UINavigationControllerHideShowBarDuration;
     
     if (self.navigationController.navigationBar.hidden) {
@@ -150,9 +153,10 @@
         self.navigationController.navigationBar.hidden = FALSE;
         self.navigationController.toolbar.alpha = 0.0;
         self.navigationController.toolbar.hidden = FALSE;
+        
         UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
         [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
-            [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
+            [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
             self.navigationController.navigationBar.alpha = 1.0;
             self.navigationController.toolbar.alpha = 1.0;
         } completion:^(BOOL finished) {
@@ -165,9 +169,10 @@
         self.navigationController.navigationBar.hidden = FALSE;
         self.navigationController.toolbar.alpha = 1.0;
         self.navigationController.toolbar.hidden = FALSE;
+        
         UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
         [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
-            [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationNone];
+            [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
             self.navigationController.navigationBar.alpha = 0.0;
             self.navigationController.toolbar.alpha = 0.0;
         } completion:^(BOOL finished) {
@@ -201,7 +206,7 @@
 #pragma mark -
 
 - (void)photoViewDidSingleTap:(PZPhotoView *)photoView {
-    [self toggleNavigationVisibility];
+    [self toggleFullScreen];
 }
 
 - (void)photoViewDidDoubleTap:(PZPhotoView *)photoView {
