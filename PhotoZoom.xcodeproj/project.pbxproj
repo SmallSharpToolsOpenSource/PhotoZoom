@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		260DCAD7164184C1000C27CD /* Box.png in Resources */ = {isa = PBXBuildFile; fileRef = 260DCAD6164184C1000C27CD /* Box.png */; };
+		266ED208164DD72C00FAC72C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266ED207164DD72C00FAC72C /* QuartzCore.framework */; };
+		266ED20C164DE00900FAC72C /* PZPhotoScrollerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266ED20B164DE00900FAC72C /* PZPhotoScrollerViewController.m */; };
+		266ED20F164DE24600FAC72C /* PZPagingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 266ED20E164DE24600FAC72C /* PZPagingScrollView.m */; };
 		269FEE1E163C714600EB8347 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE1D163C714600EB8347 /* UIKit.framework */; };
 		269FEE20163C714600EB8347 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE1F163C714600EB8347 /* Foundation.framework */; };
 		269FEE22163C714600EB8347 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE21163C714600EB8347 /* CoreGraphics.framework */; };
@@ -25,6 +28,14 @@
 		269FEE4C163C714600EB8347 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269FEE4A163C714600EB8347 /* InfoPlist.strings */; };
 		269FEE4F163C714600EB8347 /* PhotoZoomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE4E163C714600EB8347 /* PhotoZoomTests.m */; };
 		269FEE65163CA97800EB8347 /* PZPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE64163CA97800EB8347 /* PZPhotoView.m */; };
+		26D13B6516518152009D9B34 /* ONDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B5B16518152009D9B34 /* ONDownloadItem.m */; };
+		26D13B6616518152009D9B34 /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B5D16518152009D9B34 /* ONDownloadOperation.m */; };
+		26D13B6716518152009D9B34 /* ONHeadRequestOpertion.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B5F16518152009D9B34 /* ONHeadRequestOpertion.m */; };
+		26D13B6816518152009D9B34 /* ONNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B6216518152009D9B34 /* ONNetworkManager.m */; };
+		26D13B6916518152009D9B34 /* ONNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B6416518152009D9B34 /* ONNetworkOperation.m */; };
+		26D13B6E16518A61009D9B34 /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B6D16518A61009D9B34 /* NSDate+InternetDateTime.m */; };
+		26FA43D2164DD18A00FECA1E /* PZImagePalette.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26FA43D1164DD18A00FECA1E /* PZImagePalette.xib */; };
+		26FA43D6164DD41700FECA1E /* PZImagePalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FA43D5164DD41700FECA1E /* PZImagePalette.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +50,11 @@
 
 /* Begin PBXFileReference section */
 		260DCAD6164184C1000C27CD /* Box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box.png; sourceTree = "<group>"; };
+		266ED207164DD72C00FAC72C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		266ED20A164DE00900FAC72C /* PZPhotoScrollerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPhotoScrollerViewController.h; sourceTree = "<group>"; };
+		266ED20B164DE00900FAC72C /* PZPhotoScrollerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPhotoScrollerViewController.m; sourceTree = "<group>"; };
+		266ED20D164DE24600FAC72C /* PZPagingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPagingScrollView.h; sourceTree = "<group>"; };
+		266ED20E164DE24600FAC72C /* PZPagingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPagingScrollView.m; sourceTree = "<group>"; };
 		269FEE19163C714600EB8347 /* PhotoZoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoZoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		269FEE1D163C714600EB8347 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		269FEE1F163C714600EB8347 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -64,6 +80,23 @@
 		269FEE63163CA97800EB8347 /* PZPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPhotoView.h; sourceTree = "<group>"; };
 		269FEE64163CA97800EB8347 /* PZPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPhotoView.m; sourceTree = "<group>"; };
 		269FEE6A163F7CD000EB8347 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		26D13B5A16518152009D9B34 /* ONDownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONDownloadItem.h; path = OptimizedNetworking/Networking/ONDownloadItem.h; sourceTree = SOURCE_ROOT; };
+		26D13B5B16518152009D9B34 /* ONDownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONDownloadItem.m; path = OptimizedNetworking/Networking/ONDownloadItem.m; sourceTree = SOURCE_ROOT; };
+		26D13B5C16518152009D9B34 /* ONDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONDownloadOperation.h; path = OptimizedNetworking/Networking/ONDownloadOperation.h; sourceTree = SOURCE_ROOT; };
+		26D13B5D16518152009D9B34 /* ONDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONDownloadOperation.m; path = OptimizedNetworking/Networking/ONDownloadOperation.m; sourceTree = SOURCE_ROOT; };
+		26D13B5E16518152009D9B34 /* ONHeadRequestOpertion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONHeadRequestOpertion.h; path = OptimizedNetworking/Networking/ONHeadRequestOpertion.h; sourceTree = SOURCE_ROOT; };
+		26D13B5F16518152009D9B34 /* ONHeadRequestOpertion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONHeadRequestOpertion.m; path = OptimizedNetworking/Networking/ONHeadRequestOpertion.m; sourceTree = SOURCE_ROOT; };
+		26D13B6016518152009D9B34 /* ONNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONNetworking.h; path = OptimizedNetworking/Networking/ONNetworking.h; sourceTree = SOURCE_ROOT; };
+		26D13B6116518152009D9B34 /* ONNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONNetworkManager.h; path = OptimizedNetworking/Networking/ONNetworkManager.h; sourceTree = SOURCE_ROOT; };
+		26D13B6216518152009D9B34 /* ONNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONNetworkManager.m; path = OptimizedNetworking/Networking/ONNetworkManager.m; sourceTree = SOURCE_ROOT; };
+		26D13B6316518152009D9B34 /* ONNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONNetworkOperation.h; path = OptimizedNetworking/Networking/ONNetworkOperation.h; sourceTree = SOURCE_ROOT; };
+		26D13B6416518152009D9B34 /* ONNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONNetworkOperation.m; path = OptimizedNetworking/Networking/ONNetworkOperation.m; sourceTree = SOURCE_ROOT; };
+		26D13B6A16518524009D9B34 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		26D13B6C16518A61009D9B34 /* NSDate+InternetDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+InternetDateTime.h"; sourceTree = "<group>"; };
+		26D13B6D16518A61009D9B34 /* NSDate+InternetDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+InternetDateTime.m"; sourceTree = "<group>"; };
+		26FA43D1164DD18A00FECA1E /* PZImagePalette.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PZImagePalette.xib; sourceTree = "<group>"; };
+		26FA43D4164DD41700FECA1E /* PZImagePalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZImagePalette.h; sourceTree = "<group>"; };
+		26FA43D5164DD41700FECA1E /* PZImagePalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZImagePalette.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				266ED208164DD72C00FAC72C /* QuartzCore.framework in Frameworks */,
 				269FEE1E163C714600EB8347 /* UIKit.framework in Frameworks */,
 				269FEE20163C714600EB8347 /* Foundation.framework in Frameworks */,
 				269FEE22163C714600EB8347 /* CoreGraphics.framework in Frameworks */,
@@ -117,6 +151,7 @@
 				269FEE1F163C714600EB8347 /* Foundation.framework */,
 				269FEE21163C714600EB8347 /* CoreGraphics.framework */,
 				269FEE41163C714600EB8347 /* SenTestingKit.framework */,
+				266ED207164DD72C00FAC72C /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,6 +159,8 @@
 		269FEE23163C714600EB8347 /* PhotoZoom */ = {
 			isa = PBXGroup;
 			children = (
+				26D13B6B16518A51009D9B34 /* Common */,
+				26D13B5816518143009D9B34 /* OptimizedNetworking */,
 				269FEE24163C714600EB8347 /* Supporting Files */,
 				269FEE2C163C714600EB8347 /* PZAppDelegate.h */,
 				269FEE2D163C714600EB8347 /* PZAppDelegate.m */,
@@ -132,6 +169,13 @@
 				269FEE39163C714600EB8347 /* PZViewController.m */,
 				269FEE63163CA97800EB8347 /* PZPhotoView.h */,
 				269FEE64163CA97800EB8347 /* PZPhotoView.m */,
+				266ED20D164DE24600FAC72C /* PZPagingScrollView.h */,
+				266ED20E164DE24600FAC72C /* PZPagingScrollView.m */,
+				26FA43D4164DD41700FECA1E /* PZImagePalette.h */,
+				26FA43D5164DD41700FECA1E /* PZImagePalette.m */,
+				26FA43D1164DD18A00FECA1E /* PZImagePalette.xib */,
+				266ED20A164DE00900FAC72C /* PZPhotoScrollerViewController.h */,
+				266ED20B164DE00900FAC72C /* PZPhotoScrollerViewController.m */,
 			);
 			path = PhotoZoom;
 			sourceTree = "<group>";
@@ -168,6 +212,34 @@
 				269FEE4A163C714600EB8347 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		26D13B5816518143009D9B34 /* OptimizedNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				26D13B6016518152009D9B34 /* ONNetworking.h */,
+				26D13B5A16518152009D9B34 /* ONDownloadItem.h */,
+				26D13B5B16518152009D9B34 /* ONDownloadItem.m */,
+				26D13B5C16518152009D9B34 /* ONDownloadOperation.h */,
+				26D13B5D16518152009D9B34 /* ONDownloadOperation.m */,
+				26D13B5E16518152009D9B34 /* ONHeadRequestOpertion.h */,
+				26D13B5F16518152009D9B34 /* ONHeadRequestOpertion.m */,
+				26D13B6116518152009D9B34 /* ONNetworkManager.h */,
+				26D13B6216518152009D9B34 /* ONNetworkManager.m */,
+				26D13B6316518152009D9B34 /* ONNetworkOperation.h */,
+				26D13B6416518152009D9B34 /* ONNetworkOperation.m */,
+			);
+			name = OptimizedNetworking;
+			sourceTree = "<group>";
+		};
+		26D13B6B16518A51009D9B34 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				26D13B6A16518524009D9B34 /* Singleton.h */,
+				26D13B6C16518A61009D9B34 /* NSDate+InternetDateTime.h */,
+				26D13B6D16518A61009D9B34 /* NSDate+InternetDateTime.m */,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +320,7 @@
 				269FEE34163C714600EB8347 /* Default-568h@2x.png in Resources */,
 				269FEE37163C714600EB8347 /* MainStoryboard.storyboard in Resources */,
 				260DCAD7164184C1000C27CD /* Box.png in Resources */,
+				26FA43D2164DD18A00FECA1E /* PZImagePalette.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +359,15 @@
 				269FEE2E163C714600EB8347 /* PZAppDelegate.m in Sources */,
 				269FEE3A163C714600EB8347 /* PZViewController.m in Sources */,
 				269FEE65163CA97800EB8347 /* PZPhotoView.m in Sources */,
+				26FA43D6164DD41700FECA1E /* PZImagePalette.m in Sources */,
+				266ED20C164DE00900FAC72C /* PZPhotoScrollerViewController.m in Sources */,
+				266ED20F164DE24600FAC72C /* PZPagingScrollView.m in Sources */,
+				26D13B6516518152009D9B34 /* ONDownloadItem.m in Sources */,
+				26D13B6616518152009D9B34 /* ONDownloadOperation.m in Sources */,
+				26D13B6716518152009D9B34 /* ONHeadRequestOpertion.m in Sources */,
+				26D13B6816518152009D9B34 /* ONNetworkManager.m in Sources */,
+				26D13B6916518152009D9B34 /* ONNetworkOperation.m in Sources */,
+				26D13B6E16518A61009D9B34 /* NSDate+InternetDateTime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +441,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = PhotoZoom;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -380,6 +463,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = PhotoZoom;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

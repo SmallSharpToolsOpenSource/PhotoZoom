@@ -9,6 +9,7 @@
 #import "PZViewController.h"
 
 #import "PZPhotoView.h"
+#import "PZImagePalette.h"
 
 @interface PZViewController () <PZPhotoViewDelegate>
 
@@ -26,10 +27,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    PZImagePalette *palette = [[PZImagePalette alloc] init];
+    
     if ([self.view isKindOfClass:[PZPhotoView class]]) {
         PZPhotoView *photoView = (PZPhotoView *)self.view;
         photoView.photoViewDelegate = self;
-        [photoView displayImage:[UIImage imageNamed:@"Box.png"]];
+//        [photoView displayImage:[UIImage imageNamed:@"Box.png"]];
+        UIImage *image = [[palette images] objectAtIndex:4];
+        [photoView displayImage:image];
     }
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
@@ -44,15 +49,6 @@
     self.navigationController.toolbar.hidden = FALSE;
     [self.navigationController setNavigationBarHidden:FALSE animated:FALSE];
     [self.navigationController setToolbarHidden:FALSE animated:FALSE];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
 }
 
 - (NSArray *)customToolbarItems {
@@ -145,42 +141,58 @@
 }
 
 - (void)toggleFullScreen {
-    CGFloat duration = UINavigationControllerHideShowBarDuration;
+//    CGFloat duration = UINavigationControllerHideShowBarDuration;
     
-    if (self.navigationController.navigationBar.hidden) {
+    if ([self.navigationController isNavigationBarHidden]) {
         // fade in navigation
-        self.navigationController.navigationBar.alpha = 0.0;
-        self.navigationController.navigationBar.hidden = FALSE;
-        self.navigationController.toolbar.alpha = 0.0;
-        self.navigationController.toolbar.hidden = FALSE;
+//        self.navigationController.navigationBar.alpha = 0.0;
+//        self.navigationController.navigationBar.hidden = FALSE;
+//        self.navigationController.toolbar.alpha = 0.0;
+//        self.navigationController.toolbar.hidden = FALSE;
         
-        UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
-        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+        // moving navbar down is necessary because it seems to be going under the status bar
+        CGRect navbarFrame = self.navigationController.navigationBar.frame;
+        navbarFrame.origin.y = 20.0;
+        self.navigationController.navigationBar.frame = navbarFrame;
+        
+//        UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
+//        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
             [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
-            self.navigationController.navigationBar.alpha = 1.0;
-            self.navigationController.toolbar.alpha = 1.0;
-        } completion:^(BOOL finished) {
-            [self.view setNeedsLayout];
-        }];
+            [self.navigationController setNavigationBarHidden:FALSE];
+            [self.navigationController setToolbarHidden:FALSE];
+//            self.navigationController.navigationBar.alpha = 1.0;
+//            self.navigationController.toolbar.alpha = 1.0;
+//        } completion:^(BOOL finished) {
+//        }];
     }
     else {
         // fade out navigation
-        self.navigationController.navigationBar.alpha = 1.0;
-        self.navigationController.navigationBar.hidden = FALSE;
-        self.navigationController.toolbar.alpha = 1.0;
-        self.navigationController.toolbar.hidden = FALSE;
+//        self.navigationController.navigationBar.alpha = 1.0;
+//        self.navigationController.navigationBar.hidden = FALSE;
+//        self.navigationController.toolbar.alpha = 1.0;
+//        self.navigationController.toolbar.hidden = FALSE;
         
-        UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
-        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
+//        UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction;
+//        [UIView animateWithDuration:duration delay:0.0 options:options animations:^{
             [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
-            self.navigationController.navigationBar.alpha = 0.0;
-            self.navigationController.toolbar.alpha = 0.0;
-        } completion:^(BOOL finished) {
-            self.navigationController.navigationBar.hidden = TRUE;
-            self.navigationController.toolbar.hidden = TRUE;
-            [self.view setNeedsLayout];
-        }];
+            [self.navigationController setNavigationBarHidden:TRUE];
+            [self.navigationController setToolbarHidden:TRUE];
+
+//            self.navigationController.navigationBar.alpha = 0.0;
+//            self.navigationController.toolbar.alpha = 0.0;
+//        } completion:^(BOOL finished) {
+//            self.navigationController.navigationBar.hidden = TRUE;
+//            self.navigationController.toolbar.hidden = TRUE;
+//        }];
     }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self.navigationController.navigationBar setNeedsLayout];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self.view setNeedsLayout];
+    });
+
 }
 
 #pragma mark - Orientation

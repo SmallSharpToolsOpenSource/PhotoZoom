@@ -1,0 +1,3 @@
+[submodule "OptimizedNetworking"]
+	path = OptimizedNetworking
+	url = git@github.com:brennanMKE/OptimizedNetworking.git

@@ -11,6 +11,8 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <CoreGraphics/CoreGraphics.h>
+    #import <QuartzCore/QuartzCore.h>
 #endif
 
 // Disables log messages when debugging is turned off
