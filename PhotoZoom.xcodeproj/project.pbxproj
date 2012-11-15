@@ -28,6 +28,7 @@
 		269FEE4C163C714600EB8347 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269FEE4A163C714600EB8347 /* InfoPlist.strings */; };
 		269FEE4F163C714600EB8347 /* PhotoZoomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE4E163C714600EB8347 /* PhotoZoomTests.m */; };
 		269FEE65163CA97800EB8347 /* PZPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE64163CA97800EB8347 /* PZPhotoView.m */; };
+		26B0AC93165569DA002D031F /* PZNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B0AC92165569DA002D031F /* PZNavigationController.m */; };
 		26D13B6516518152009D9B34 /* ONDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B5B16518152009D9B34 /* ONDownloadItem.m */; };
 		26D13B6616518152009D9B34 /* ONDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B5D16518152009D9B34 /* ONDownloadOperation.m */; };
 		26D13B6716518152009D9B34 /* ONHeadRequestOpertion.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D13B5F16518152009D9B34 /* ONHeadRequestOpertion.m */; };
@@ -80,6 +81,8 @@
 		269FEE63163CA97800EB8347 /* PZPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPhotoView.h; sourceTree = "<group>"; };
 		269FEE64163CA97800EB8347 /* PZPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPhotoView.m; sourceTree = "<group>"; };
 		269FEE6A163F7CD000EB8347 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		26B0AC91165569D9002D031F /* PZNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZNavigationController.h; sourceTree = "<group>"; };
+		26B0AC92165569DA002D031F /* PZNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZNavigationController.m; sourceTree = "<group>"; };
 		26D13B5A16518152009D9B34 /* ONDownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONDownloadItem.h; path = OptimizedNetworking/Networking/ONDownloadItem.h; sourceTree = SOURCE_ROOT; };
 		26D13B5B16518152009D9B34 /* ONDownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ONDownloadItem.m; path = OptimizedNetworking/Networking/ONDownloadItem.m; sourceTree = SOURCE_ROOT; };
 		26D13B5C16518152009D9B34 /* ONDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ONDownloadOperation.h; path = OptimizedNetworking/Networking/ONDownloadOperation.h; sourceTree = SOURCE_ROOT; };
@@ -176,6 +179,8 @@
 				26FA43D1164DD18A00FECA1E /* PZImagePalette.xib */,
 				266ED20A164DE00900FAC72C /* PZPhotoScrollerViewController.h */,
 				266ED20B164DE00900FAC72C /* PZPhotoScrollerViewController.m */,
+				26B0AC91165569D9002D031F /* PZNavigationController.h */,
+				26B0AC92165569DA002D031F /* PZNavigationController.m */,
 			);
 			path = PhotoZoom;
 			sourceTree = "<group>";
@@ -368,6 +373,7 @@
 				26D13B6816518152009D9B34 /* ONNetworkManager.m in Sources */,
 				26D13B6916518152009D9B34 /* ONNetworkOperation.m in Sources */,
 				26D13B6E16518A61009D9B34 /* NSDate+InternetDateTime.m in Sources */,
+				26B0AC93165569DA002D031F /* PZNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,8 +42,6 @@
     self.bouncesZoom = TRUE;
     self.decelerationRate = UIScrollViewDecelerationRateFast;
     
-    self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-    
     UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollViewDoubleTap:)];
     [scrollViewDoubleTap setNumberOfTapsRequired:2];
     [self addGestureRecognizer:scrollViewDoubleTap];
@@ -112,11 +110,23 @@
 #pragma mark - Public Implementation
 #pragma mark -
 
-- (void)displayImage:(UIImage *)image {
+- (void)prepareForReuse {
     // start by dropping any views and resetting the key properties
+    if (self.imageView != nil) {
+        for (UIGestureRecognizer *gestureRecognizer in self.imageView.gestureRecognizers) {
+            [self.imageView removeGestureRecognizer:gestureRecognizer];
+        }
+    }
+    
     for (UIView *view in self.subviews) {
         [view removeFromSuperview];
     }
+    
+    self.imageView = nil;
+}
+
+- (void)displayImage:(UIImage *)image {
+    assert(self.photoViewDelegate != nil);
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
@@ -146,6 +156,10 @@
     
     [self setMaxMinZoomScalesForCurrentBounds];
     [self setZoomScale:self.minimumZoomScale animated:FALSE];
+    
+//    [self logRect:self.frame withName:@"self.frame"];
+//    DebugLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
+//    DebugLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
     
     // prepare the layout for full screen when status bar, navigation bar and toolbar/tabbar are hidden
 //    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
@@ -377,6 +391,17 @@
 
 - (void)logRect:(CGRect)rect withName:(NSString *)name {
     DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+}
+
+- (void)logLayout {
+    DebugLog(@"#### PZPhotoView ###");
+    
+    [self logRect:self.bounds withName:@"self.bounds"];
+    [self logRect:self.frame withName:@"self.frame"];
+    
+    DebugLog(@"contentSize: %f, %f", self.contentSize.width, self.contentSize.height);
+    DebugLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
+    DebugLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
 }
 
 @end

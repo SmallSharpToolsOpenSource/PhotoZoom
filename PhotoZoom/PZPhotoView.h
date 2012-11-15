@@ -14,6 +14,7 @@
 
 @property(assign, nonatomic) id<PZPhotoViewDelegate> photoViewDelegate;
 
+- (void)prepareForReuse;
 - (void)displayImage:(UIImage *)image;
 
 - (void)updateZoomScale:(CGFloat)newScale;
