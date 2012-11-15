@@ -93,7 +93,6 @@
 }
 
 - (void)setFrame:(CGRect)frame {
-//    [self logRect:frame withName:@"new frame"];
     BOOL sizeChanging = !CGSizeEqualToSize(frame.size, self.frame.size);
     
     if (sizeChanging) {
@@ -156,19 +155,6 @@
     
     [self setMaxMinZoomScalesForCurrentBounds];
     [self setZoomScale:self.minimumZoomScale animated:FALSE];
-    
-//    [self logRect:self.frame withName:@"self.frame"];
-//    DebugLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
-//    DebugLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
-    
-    // prepare the layout for full screen when status bar, navigation bar and toolbar/tabbar are hidden
-//    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        CGRect frame = self.frame;
-//        frame.origin.y = -20.0; // move up under translucent status bar
-//        frame.size.height = applicationFrame.size.height + 20.0; // increase height
-//        self.frame = frame;
-//    });
 }
 
 #pragma mark - Gestures
@@ -386,7 +372,7 @@
     return self.imageView;
 }
 
-#pragma mark - Debugging Methods
+#pragma mark - Layout Debugging Support
 #pragma mark -
 
 - (void)logRect:(CGRect)rect withName:(NSString *)name {

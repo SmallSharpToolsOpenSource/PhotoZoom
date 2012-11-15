@@ -25,7 +25,6 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
         [self setupView];
     }
     return self;
@@ -43,6 +42,7 @@
     self.showsHorizontalScrollIndicator = NO;
     self.delegate = self;
     
+    // it is very important to auto resize
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     self.recycledPages = [[NSMutableSet alloc] init];
@@ -69,11 +69,7 @@
     CGRect frame = [[UIScreen mainScreen] bounds];
     frame.origin.x -= PADDING;
     frame.size.width += (2 * PADDING);
-//    frame.origin.y += 20.0;
-//    frame.size.height += 20.0;
     return frame;
-    
-//    return self.bounds;
 }
 
 - (CGRect)frameForPageAtIndex:(NSUInteger)index {
@@ -119,8 +115,10 @@
 
 - (void)tilePages {
     if (self.suspendTiling) {
+        // tiling during rotation causes odd behavior so it is best to suspend it
         return;
     }
+    
     assert(self.pagingViewDelegate != nil);
     NSUInteger count = [self.pagingViewDelegate pagingScrollViewPagingViewCount:self];
     
@@ -130,8 +128,6 @@
     int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
     firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
     lastNeededPageIndex  = MIN(lastNeededPageIndex, count - 1);
-    
-    // use tag on page (UIView) as the index?
     
     // Recycle no-longer-visible pages
     for (UIView *page in self.visiblePages) {
@@ -153,6 +149,9 @@
         }
     }
 }
+
+#pragma mark - Layout Debugging Support
+#pragma mark -
 
 - (void)logRect:(CGRect)rect withName:(NSString *)name {
     DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
@@ -231,31 +230,18 @@
 
 - (void)displayPagingViewAtIndex:(NSUInteger)index {
     assert([self conformsToProtocol:@protocol(UIScrollViewDelegate)]);
-//    assert(self.delegate == self);
-    self.delegate = self;
+    assert(self.delegate == self);
     assert(self.pagingViewDelegate != nil);
     
     _currentPagingIndex = index;
-    
-//    NSUInteger count = [self.pagingViewDelegate pagingScrollViewPagingViewCount:self];
-//    DebugLog(@"count: %i", count);
     
     self.contentSize = [self contentSizeForPagingScrollView];
     [self setContentOffset:[self scrollPositionForIndex:index] animated:FALSE];
     
     [self tilePages];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self logLayout];
-    });
-    
-//    [self logRect:self.frame withName:@"self.frame"];
-//    DebugLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
-//    DebugLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
 }
 
 - (void)resetDisplay {
-//    DebugLog(@"_currentPagingIndex: %i", _currentPagingIndex);
     NSUInteger count = [self.pagingViewDelegate pagingScrollViewPagingViewCount:self];
     assert(_currentPagingIndex < count);
     
@@ -279,7 +265,6 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    DebugLog(@"currentPagingIndex: %i", [self currentPagingIndex]);
     _currentPagingIndex = [self currentPagingIndex];
 }
 
