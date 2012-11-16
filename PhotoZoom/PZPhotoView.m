@@ -8,7 +8,7 @@
 
 #import "PZPhotoView.h"
 
-#define kZoomStep 1.5
+#define kZoomStep 2
 
 @interface PZPhotoView () <UIScrollViewDelegate>
 
@@ -286,29 +286,26 @@
     return zoomRect;
 }
 
+
+
 - (void)setMaxMinZoomScalesForCurrentBounds {
     // calculate minimum scale to perfectly fit image width, and begin at that scale
     CGSize boundsSize = self.bounds.size;
     
-    // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
-    // maximum zoom scale to 0.5.
-    CGFloat maxScale = 1.0 / [[UIScreen mainScreen] scale];
+    CGFloat minScale = 0.25;
     
-    CGFloat minScale  = maxScale; // default
-    
-    // calculate min/max zoomscale
-    CGFloat xScale = boundsSize.width  / self.imageView.bounds.size.width;    // the scale needed to perfectly fit the image width-wise
-    CGFloat yScale = boundsSize.height / self.imageView.bounds.size.height;   // the scale needed to perfectly fit the image height-wise
-
-    // fill width if the image and phone are both portrait or both landscape; otherwise take smaller scale
-    BOOL imagePortrait = self.imageView.bounds.size.height > self.imageView.bounds.size.width;
-    BOOL phonePortrait = boundsSize.height > boundsSize.width;
-    minScale = imagePortrait == phonePortrait ? xScale : MIN(xScale, yScale);
-    
-    // don't let minScale exceed maxScale. (If the image is smaller than the screen, we don't want to force it to be zoomed.)
-    if (minScale > maxScale) {
-        minScale = maxScale / 2.0;
+    if (self.imageView.bounds.size.width > 0.0 && self.imageView.bounds.size.height > 0.0) {
+        // calculate min/max zoomscale
+        CGFloat xScale = boundsSize.width  / self.imageView.bounds.size.width;    // the scale needed to perfectly fit the image width-wise
+        CGFloat yScale = boundsSize.height / self.imageView.bounds.size.height;   // the scale needed to perfectly fit the image height-wise
+        
+//        xScale = MIN(1, xScale);
+//        yScale = MIN(1, yScale);
+        
+        minScale = MIN(xScale, yScale);
     }
+    
+    CGFloat maxScale = minScale * (kZoomStep * 2);
     
     self.maximumZoomScale = maxScale;
     self.minimumZoomScale = minScale;
