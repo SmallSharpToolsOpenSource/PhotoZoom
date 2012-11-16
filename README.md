@@ -9,7 +9,7 @@ There are lots of photo browsing projects. You can find some on [Cocoa Controols
 did not find they met my needs. I wanted something that is very simple which could be dropped into an app easily. This solution
 is simply an extension of UIScrollView with the addition of tap gestures.
 
-The project was built by referencing the PhotoScroller and AutoScroll samples from Apple.
+The project was built by referencing the PhotoScroller and AutoScroll samples from Apple. (See @elizablock on Twitter)
 
 ### View Controller and Views Hierarchy
 
@@ -34,16 +34,27 @@ has not been tested at all.
 ### Approach
 
 I could have put more of the code into view controllers but I am finding that coding inside of views to work better along
-with delegates to handle anything which is unique. This way I can drop multiple views into a parent view and get all of
-the functionality without any trouble. It's possible there could be multiple paging scroll views managed a view controller
-like an a news app like Pulse. This paging scroll view could be placed into a NIB managed inside of a Storyboard and
-just set up the base class to align it with your own inherited version of the view which can implement delegate methods
-as you need them.
+with delegates to handle anything which is unique so it is easier to reuse and extend. This way I can drop multiple views 
+into a parent view and get all of the functionality without any trouble. It's possible there could be multiple paging scroll 
+views managed inside a view controller like an a news app like Pulse. This paging scroll view could be placed into a NIB 
+managed inside of a Storyboard and just set the base class to align it with your own inherited version of the view which 
+can implement delegate methods as you need them.
 
 ### Reuse
 
 To use these classes in your own project you only need PZPagingScrollView and PZPhotoView. The rest is just for reference
 on how it should work.
+
+### Caveats
+
+The geometry can be tricky when managing a scroll view within a scroll view. Then there is the process of hiding and showing
+the status bar, navbar and toolbar which can distort the layout and require observing those changes and adapting with
+by coding adaptations or to better manage the layout with autoresizing. I found it very difficult to toggle full screen
+mode due to the side effects to the layout. I tried to mimic the behavior in the Photos app but from the public API I do
+not seem to have a safe way to animate the status bar and other bars in sync with each other. So I have simply done the
+best that I can do. There is a jump due to the status bar which I would prefer to eliminate once I can learn a better 
+approach. Once I get some answers on the developer forums or Stackoverflow I may be able to update this code to provide
+a smoother transition.
 
 Brennan Stehling  
 SmallSharpTools LLC  
