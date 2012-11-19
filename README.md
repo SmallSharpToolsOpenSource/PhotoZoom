@@ -1,12 +1,12 @@
 PhotoZoom
 ===================
 
-### iOS project to show how to use gestures to zoom a photo.
+## iOS project which closely mimics the behavior of the Apple Photos app.
 
 ### Overview
 
 There are lots of photo browsing projects. You can find some on [Cocoa Controols](http://www.cocoacontrols.com/tags/photo) but I
-did not find they met my needs. I wanted something that is very simple which could be dropped into an app easily. This solution
+did not find them to met my needs. I wanted something that is very simple which could be dropped into an app easily. This solution
 is simply an extension of UIScrollView with the addition of tap gestures.
 
 The project was built by referencing the PhotoScroller and AutoScroll samples from Apple. (See @elizablock on Twitter)
@@ -55,6 +55,13 @@ not seem to have a safe way to animate the status bar and other bars in sync wit
 best that I can do. There is a jump due to the status bar which I would prefer to eliminate once I can learn a better 
 approach. Once I get some answers on the developer forums or Stackoverflow I may be able to update this code to provide
 a smoother transition.
+
+### Quirks
+
+Something odd about this project is the fact that the NavigationBar does not show by default. I have to make it visible
+with code. That does not make sense as it should show by default. I need to learn why that is happening and fix it. It 
+may simply be a bug with Xcode with the frequence changes to Interface Builder recently and it will work itself out
+automatically.
 
 Brennan Stehling  
 SmallSharpTools LLC  
