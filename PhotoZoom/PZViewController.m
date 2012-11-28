@@ -29,8 +29,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 
     self.navigationController.toolbar.translucent = TRUE;
     self.navigationController.toolbar.tintColor = [UIColor grayColor];
@@ -51,7 +49,7 @@
         self.pagingScrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     });
 
-    [self logLayout];
+//    [self logLayout];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -126,23 +124,27 @@
     [photoView updateZoomScale:photoView.minimumZoomScale];
 }
 
-- (void)toggleFullScreen {
-    if ([self.navigationController isNavigationBarHidden]) {
+- (void)toggleFullScreen {    
+    if (self.navigationController.navigationBar.alpha == 0.0) {
         // fade in navigation
-        [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationFade];
-        [self.navigationController setNavigationBarHidden:FALSE];
-        [self.navigationController setToolbarHidden:FALSE];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
+            self.navigationController.navigationBar.alpha = 1.0;
+            self.navigationController.toolbar.alpha = 1.0;
+        } completion:^(BOOL finished) {
+        }];
     }
     else {
         // fade out navigation
-        [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
-        [self.navigationController setNavigationBarHidden:TRUE];
-        [self.navigationController setToolbarHidden:TRUE];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
+            self.navigationController.navigationBar.alpha = 0.0;
+            self.navigationController.toolbar.alpha = 0.0;
+        } completion:^(BOOL finished) {
+        }];
     }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        self.pagingScrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-    });
 }
 
 #pragma mark - Layout Debugging Support

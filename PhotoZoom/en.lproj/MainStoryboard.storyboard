@@ -42,6 +42,9 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="PhotoZoom" id="aiS-Qw-Eli"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackTranslucent" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="blackTranslucent"/>
                     <connections>
                         <outlet property="pagingScrollView" destination="3" id="aQ6-Di-wdZ"/>
                     </connections>
@@ -51,6 +54,23 @@
             <point key="canvasLocation" x="-4" y="-25"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="PZNavigationController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PZNavigationController.h"/>
+        </class>
+        <class className="PZPagingScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PZPagingScrollView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="pagingViewDelegate"/>
+            </relationships>
+        </class>
+        <class className="PZViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PZViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="pagingScrollView" candidateClass="PZPagingScrollView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
