@@ -17,6 +17,9 @@
 - (void)prepareForReuse;
 - (void)displayImage:(UIImage *)image;
 
+- (void)startWaiting;
+- (void)stopWaiting;
+
 - (void)updateZoomScale:(CGFloat)newScale;
 - (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center;
 

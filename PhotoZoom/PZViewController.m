@@ -8,16 +8,18 @@
 
 #import "PZViewController.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "PZPagingScrollView.h"
 #import "PZPhotoView.h"
-#import "PZImagePalette.h"
+#import "PZPhotosDataSource.h"
+//#import "PZImagePalette.h"
 
 @interface PZViewController () <PZPagingScrollViewDelegate, PZPhotoViewDelegate, UIScrollViewDelegate>
 
 @property (readonly) NSArray *customToolbarItems;
 
-@property (strong, nonatomic) NSArray *images;
-
+@property (strong, nonatomic) PZPhotosDataSource *photosDataSource;
 @property (weak, nonatomic) IBOutlet PZPagingScrollView *pagingScrollView;
 
 @end
@@ -26,6 +28,12 @@
 
 #pragma mark - View Lifecycle
 #pragma mark -
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.photosDataSource = [[PZPhotosDataSource alloc] init];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -40,16 +48,17 @@
     self.navigationController.toolbar.hidden = FALSE;
     [self.navigationController setNavigationBarHidden:FALSE animated:FALSE];
     [self.navigationController setToolbarHidden:FALSE animated:FALSE];
-    
-    PZImagePalette *palette = [[PZImagePalette alloc] init];
-    self.images = palette.images;
-    [self.pagingScrollView displayPagingViewAtIndex:0];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         self.pagingScrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     });
+}
 
-//    [self logLayout];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // resetDisplay will set the content size and position the frames (not ideal to do it this way)
+    [self.pagingScrollView resetDisplay];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -88,7 +97,7 @@
                                   action:nil];
     
     UIBarButtonItem *maximumButton = [[UIBarButtonItem alloc]
-                                    initWithTitle:@"Maxium"
+                                    initWithTitle:@"Maximum"
                                     style:UIBarButtonItemStyleBordered
                                     target:self
                                    action:@selector(showMaximumSize:)];
@@ -195,7 +204,7 @@
 }
 
 - (NSUInteger)pagingScrollViewPagingViewCount:(PZPagingScrollView *)pagingScrollView {
-    return self.images.count;
+    return self.photosDataSource.count;
 }
 
 - (UIView *)pagingScrollView:(PZPagingScrollView *)pagingScrollView pageViewForIndex:(NSUInteger)index {
@@ -207,12 +216,20 @@
 }
 
 - (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView preparePageViewForDisplay:(UIView *)pageView forIndex:(NSUInteger)index {
-    assert([pageView isKindOfClass:[PZPhotoView class]]);
-    assert(index < self.images.count);
+    NSAssert([pageView isKindOfClass:[PZPhotoView class]], @"Invalid State");
+    NSAssert(index < self.photosDataSource.count, @"Invalid State");
     
     PZPhotoView *photoView = (PZPhotoView *)pageView;
-    UIImage *image = [self.images objectAtIndex:index];
-    [photoView displayImage:image];
+    [photoView startWaiting];
+    [self.photosDataSource photoForIndex:index withCompletionBlock:^(UIImage *photo, NSError *error) {
+        [photoView stopWaiting];
+        if (error != nil) {
+            DebugLog(@"Error: %@", error);
+        }
+        else {
+            [photoView displayImage:photo];
+        }
+    }];
 }
 
 #pragma mark - PZPhotoViewDelegate

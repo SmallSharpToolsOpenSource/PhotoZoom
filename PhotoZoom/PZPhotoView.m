@@ -13,6 +13,7 @@
 @interface PZPhotoView () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) UIImageView *imageView;
+@property (weak, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -57,39 +58,41 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    if (self.imageView) {
+        // center the zoom view as it becomes smaller than the size of the screen
+        CGSize boundsSize = self.bounds.size;
+        CGRect frameToCenter = self.imageView.frame;
 
-    // center the zoom view as it becomes smaller than the size of the screen
-    CGSize boundsSize = self.bounds.size;
-    CGRect frameToCenter = self.imageView.frame;
+        // center horizontally
+        if (frameToCenter.size.width < boundsSize.width)
+            frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2;
+        else
+            frameToCenter.origin.x = 0;
 
-    // center horizontally
-    if (frameToCenter.size.width < boundsSize.width)
-        frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2;
-    else
-        frameToCenter.origin.x = 0;
+        // center vertically
+        if (frameToCenter.size.height < boundsSize.height)
+            frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2;
+        else
+            frameToCenter.origin.y = 0;
 
-    // center vertically
-    if (frameToCenter.size.height < boundsSize.height)
-        frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2;
-    else
-        frameToCenter.origin.y = 0;
-
-    self.imageView.frame = frameToCenter;
-    
-    CGPoint contentOffset = self.contentOffset;
-    
-    // ensure horizontal offset is reasonable
-    if (frameToCenter.origin.x != 0.0)
-        contentOffset.x = 0.0;
-    
-    // ensure vertical offset is reasonable
-    if (frameToCenter.origin.y != 0.0)
-        contentOffset.y = 0.0;
-    
-    self.contentOffset = contentOffset;
-    
-    // ensure content insert is zeroed out using translucent navigation bars
-    self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+        self.imageView.frame = frameToCenter;
+        
+        CGPoint contentOffset = self.contentOffset;
+        
+        // ensure horizontal offset is reasonable
+        if (frameToCenter.origin.x != 0.0)
+            contentOffset.x = 0.0;
+        
+        // ensure vertical offset is reasonable
+        if (frameToCenter.origin.y != 0.0)
+            contentOffset.y = 0.0;
+        
+        self.contentOffset = contentOffset;
+        
+        // ensure content insert is zeroed out using translucent navigation bars
+        self.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    }
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -125,7 +128,7 @@
 }
 
 - (void)displayImage:(UIImage *)image {
-    assert(self.photoViewDelegate != nil);
+    NSAssert(self.photoViewDelegate != nil, @"Invalid State");
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
@@ -155,6 +158,27 @@
     
     [self setMaxMinZoomScalesForCurrentBounds];
     [self setZoomScale:self.minimumZoomScale animated:FALSE];
+}
+
+- (void)startWaiting {
+    if (!self.activityIndicator) {
+        UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [self addSubview:activityIndicator];
+        [self bringSubviewToFront:activityIndicator];
+        [activityIndicator stopAnimating];
+        self.activityIndicator = activityIndicator;
+    }
+    
+    CGFloat xPos = (CGRectGetWidth(self.frame) / 2) - (CGRectGetWidth(self.activityIndicator.frame) / 2);
+    CGFloat yPos = (CGRectGetHeight(self.frame) / 2) - (CGRectGetHeight(self.activityIndicator.frame) / 2);
+    
+    self.activityIndicator.center = CGPointMake(xPos, yPos);
+    [self bringSubviewToFront:self.activityIndicator];
+    [self.activityIndicator startAnimating];
+}
+
+- (void)stopWaiting {
+    [self.activityIndicator stopAnimating];
 }
 
 #pragma mark - Gestures
@@ -260,8 +284,8 @@
 }
 
 - (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center {
-    assert(newScale >= self.minimumZoomScale);
-    assert(newScale <= self.maximumZoomScale);
+    NSAssert(newScale >= self.minimumZoomScale, @"Invalid State");
+    NSAssert(newScale <= self.maximumZoomScale, @"Invalid State");
 
     if (self.zoomScale != newScale) {
         CGRect zoomRect = [self zoomRectForScale:newScale withCenter:center];
@@ -270,8 +294,8 @@
 }
 
 - (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
-    assert(scale >= self.minimumZoomScale);
-    assert(scale <= self.maximumZoomScale);
+    NSAssert(scale >= self.minimumZoomScale, @"Invalid State");
+    NSAssert(scale <= self.maximumZoomScale, @"Invalid State");
     
     CGRect zoomRect;
     
@@ -286,8 +310,6 @@
     return zoomRect;
 }
 
-
-
 - (void)setMaxMinZoomScalesForCurrentBounds {
     // calculate minimum scale to perfectly fit image width, and begin at that scale
     CGSize boundsSize = self.bounds.size;
@@ -298,9 +320,6 @@
         // calculate min/max zoomscale
         CGFloat xScale = boundsSize.width  / self.imageView.bounds.size.width;    // the scale needed to perfectly fit the image width-wise
         CGFloat yScale = boundsSize.height / self.imageView.bounds.size.height;   // the scale needed to perfectly fit the image height-wise
-        
-//        xScale = MIN(1, xScale);
-//        yScale = MIN(1, yScale);
         
         minScale = MIN(xScale, yScale);
     }
