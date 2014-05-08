@@ -10,21 +10,21 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "PZPagingScrollView.h"
 #import "PZPhotoView.h"
 #import "PZPhotosDataSource.h"
-//#import "PZImagePalette.h"
 
-@interface PZViewController () <PZPagingScrollViewDelegate, PZPhotoViewDelegate, UIScrollViewDelegate>
+@interface PZViewController () <PZPhotoViewDelegate, UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (readonly) NSArray *customToolbarItems;
 
 @property (strong, nonatomic) PZPhotosDataSource *photosDataSource;
-@property (weak, nonatomic) IBOutlet PZPagingScrollView *pagingScrollView;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
-@implementation PZViewController
+@implementation PZViewController {
+    BOOL _isFullScreen;
+}
 
 #pragma mark - View Lifecycle
 #pragma mark -
@@ -48,31 +48,20 @@
     self.navigationController.toolbar.hidden = FALSE;
     [self.navigationController setNavigationBarHidden:FALSE animated:FALSE];
     [self.navigationController setToolbarHidden:FALSE animated:FALSE];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        self.pagingScrollView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     // resetDisplay will set the content size and position the frames (not ideal to do it this way)
-    [self.pagingScrollView resetDisplay];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-    // suspend tiling while rotating
-    self.pagingScrollView.suspendTiling = TRUE;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    self.pagingScrollView.suspendTiling = FALSE;
-    [self.pagingScrollView resetDisplay];
 }
 
 #pragma mark - User Actions
@@ -117,28 +106,49 @@
     return @[flexItem1, maximumButton, flexItem2, mediumButton, flexItem3, minimumButton, flexItem4];
 }
 
+- (PZPhotoView *)visiblePhotoView {
+    NSArray *visibleCells = [self.collectionView visibleCells];
+    
+    if (visibleCells.count) {
+        UIView *cell = visibleCells[0];
+        UIView *view = [cell viewWithTag:1];
+        if ([view isKindOfClass:[PZPhotoView class]]) {
+            return (PZPhotoView *)view;
+        }
+    }
+    
+    return nil;
+}
+
 - (void)showMaximumSize:(id)sender {
-    PZPhotoView *photoView = (PZPhotoView *)self.pagingScrollView.visiblePageView;
+    PZPhotoView *photoView = [self visiblePhotoView];
     [photoView updateZoomScale:photoView.maximumZoomScale];
 }
 
 - (void)showMediumSize:(id)sender {
-    PZPhotoView *photoView  = (PZPhotoView *)self.pagingScrollView.visiblePageView;
-    float newScale = (photoView.minimumZoomScale + photoView.maximumZoomScale) / 2.0;
+    PZPhotoView *photoView = [self visiblePhotoView];
+    CGFloat newScale = (photoView.minimumZoomScale + photoView.maximumZoomScale) / 2.0;
     [photoView updateZoomScale:newScale];
 }
 
 - (void)showMinimumSize:(id)sender {
-    PZPhotoView *photoView  = (PZPhotoView *)self.pagingScrollView.visiblePageView;
+    PZPhotoView *photoView = [self visiblePhotoView];
     [photoView updateZoomScale:photoView.minimumZoomScale];
 }
 
-- (void)toggleFullScreen {    
-    if (self.navigationController.navigationBar.alpha == 0.0) {
+- (void)toggleFullScreen {
+
+    DebugLog(@"toggling full screen");
+    
+    _isFullScreen = !_isFullScreen;
+    
+    if (!_isFullScreen) {
         // fade in navigation
         
+        DebugLog(@"fading in");
+        
         [UIView animateWithDuration:0.4 animations:^{
-            [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
+            [self setNeedsStatusBarAppearanceUpdate];
             self.navigationController.navigationBar.alpha = 1.0;
             self.navigationController.toolbar.alpha = 1.0;
         } completion:^(BOOL finished) {
@@ -147,13 +157,20 @@
     else {
         // fade out navigation
         
+        DebugLog(@"fading out");
+        
         [UIView animateWithDuration:0.4 animations:^{
-            [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
+            [self setNeedsStatusBarAppearanceUpdate];
             self.navigationController.navigationBar.alpha = 0.0;
             self.navigationController.toolbar.alpha = 0.0;
         } completion:^(BOOL finished) {
         }];
     }
+}
+
+- (BOOL)prefersStatusBarHidden {
+    DebugLog(@"%@", NSStringFromSelector(_cmd));
+    return _isFullScreen;
 }
 
 #pragma mark - Layout Debugging Support
@@ -170,10 +187,6 @@
 
     CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
     [self logRect:applicationFrame withName:@"application frame"];
-    
-    if ([self.pagingScrollView respondsToSelector:@selector(logLayout)]) {
-        [self.pagingScrollView performSelector:@selector(logLayout)];
-    }
 }
 
 #pragma mark - Orientation
@@ -195,43 +208,6 @@
     return TRUE;
 }
 
-#pragma mark - PZPagingScrollViewDelegate
-#pragma mark -
-
-- (Class)pagingScrollView:(PZPagingScrollView *)pagingScrollView classForIndex:(NSUInteger)index {
-    // all page views are photo views
-    return [PZPhotoView class];
-}
-
-- (NSUInteger)pagingScrollViewPagingViewCount:(PZPagingScrollView *)pagingScrollView {
-    return self.photosDataSource.count;
-}
-
-- (UIView *)pagingScrollView:(PZPagingScrollView *)pagingScrollView pageViewForIndex:(NSUInteger)index {
-    PZPhotoView *photoView = [[PZPhotoView alloc] initWithFrame:self.view.bounds];
-    photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    photoView.photoViewDelegate = self;
-    
-    return photoView;
-}
-
-- (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView preparePageViewForDisplay:(UIView *)pageView forIndex:(NSUInteger)index {
-    NSAssert([pageView isKindOfClass:[PZPhotoView class]], @"Invalid State");
-    NSAssert(index < self.photosDataSource.count, @"Invalid State");
-    
-    PZPhotoView *photoView = (PZPhotoView *)pageView;
-    [photoView startWaiting];
-    [self.photosDataSource photoForIndex:index withCompletionBlock:^(UIImage *photo, NSError *error) {
-        [photoView stopWaiting];
-        if (error != nil) {
-            DebugLog(@"Error: %@", error);
-        }
-        else {
-            [photoView displayImage:photo];
-        }
-    }];
-}
-
 #pragma mark - PZPhotoViewDelegate
 #pragma mark -
 
@@ -249,6 +225,40 @@
 
 - (void)photoViewDidDoubleTwoFingerTap:(PZPhotoView *)photoView {
     [self logLayout];
+}
+
+#pragma mark - UICollectionViewDelegate
+#pragma mark -
+
+#pragma mark - UICollectionViewDataSource
+#pragma mark -
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.photosDataSource.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoView" forIndexPath:indexPath];
+    
+    UIView *view = [cell viewWithTag:1];
+    if ([view isKindOfClass:[PZPhotoView class]]) {
+        PZPhotoView *photoView = (PZPhotoView *)view;
+        
+        [photoView prepareForReuse];
+        
+        [photoView startWaiting];
+        [self.photosDataSource photoForIndex:indexPath.item withCompletionBlock:^(UIImage *photo, NSError *error) {
+            [photoView stopWaiting];
+            if (error != nil) {
+                DebugLog(@"Error: %@", error);
+            }
+            else {
+                [photoView displayImage:photo];
+            }
+        }];
+    }
+    
+    return cell;
 }
 
 @end

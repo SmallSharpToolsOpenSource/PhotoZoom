@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5AE0FD32-8BB0-42C9-AC8A-34FB455F716F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PhotoZoom</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>24DD30BE-E70C-4476-8559-F97B7AF6D78C</key>
+		<string>https://github.com/brennanMKE/PhotoZoom.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PhotoZoom.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>24DD30BE-E70C-4476-8559-F97B7AF6D78C</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/brennanMKE/PhotoZoom.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>24DD30BE-E70C-4476-8559-F97B7AF6D78C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>24DD30BE-E70C-4476-8559-F97B7AF6D78C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PhotoZoom</string>
+		</dict>
+	</array>
+</dict>
+</plist>

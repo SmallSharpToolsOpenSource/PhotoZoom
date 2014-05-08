@@ -128,7 +128,12 @@
 }
 
 - (void)displayImage:(UIImage *)image {
-    NSAssert(self.photoViewDelegate != nil, @"Invalid State");
+    NSCAssert(self.photoViewDelegate != nil, @"Invalid State");
+    
+    if (self.imageView) {
+        [self.imageView removeFromSuperview];
+        self.imageView = nil;
+    }
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
@@ -154,6 +159,8 @@
     [self.imageView addGestureRecognizer:twoFingerTap];
     [self.imageView addGestureRecognizer:doubleTwoFingerTap];
     
+    self.imageView.backgroundColor = [UIColor greenColor];
+    
     self.contentSize = self.imageView.frame.size;
     
     [self setMaxMinZoomScalesForCurrentBounds];
@@ -164,21 +171,19 @@
     if (!self.activityIndicator) {
         UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [self addSubview:activityIndicator];
-        [self bringSubviewToFront:activityIndicator];
-        [activityIndicator stopAnimating];
+        activityIndicator.hidesWhenStopped = TRUE;
         self.activityIndicator = activityIndicator;
     }
     
-    CGFloat xPos = (CGRectGetWidth(self.frame) / 2) - (CGRectGetWidth(self.activityIndicator.frame) / 2);
-    CGFloat yPos = (CGRectGetHeight(self.frame) / 2) - (CGRectGetHeight(self.activityIndicator.frame) / 2);
-    
-    self.activityIndicator.center = CGPointMake(xPos, yPos);
+    self.activityIndicator.center = self.center;
     [self bringSubviewToFront:self.activityIndicator];
     [self.activityIndicator startAnimating];
+    self.imageView.hidden = TRUE;
 }
 
 - (void)stopWaiting {
     [self.activityIndicator stopAnimating];
+    self.imageView.hidden = FALSE;
 }
 
 #pragma mark - Gestures
@@ -191,7 +196,7 @@
 }
 
 - (void)handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.zoomScale == self.maximumZoomScale) {
+    if (self.zoomScale > (self.maximumZoomScale - FLT_EPSILON)) {
         // jump back to minimum scale
         [self updateZoomScaleWithGesture:gestureRecognizer newScale:self.minimumZoomScale];
     }
@@ -284,8 +289,8 @@
 }
 
 - (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center {
-    NSAssert(newScale >= self.minimumZoomScale, @"Invalid State");
-    NSAssert(newScale <= self.maximumZoomScale, @"Invalid State");
+    newScale = MAX(self.minimumZoomScale, newScale);
+    newScale = MIN(self.maximumZoomScale, newScale);
 
     if (self.zoomScale != newScale) {
         CGRect zoomRect = [self zoomRectForScale:newScale withCenter:center];
@@ -294,8 +299,8 @@
 }
 
 - (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
-    NSAssert(scale >= self.minimumZoomScale, @"Invalid State");
-    NSAssert(scale <= self.maximumZoomScale, @"Invalid State");
+    scale = MAX(self.minimumZoomScale, scale);
+    scale = MIN(self.maximumZoomScale, scale);
     
     CGRect zoomRect;
     
@@ -386,24 +391,6 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
-}
-
-#pragma mark - Layout Debugging Support
-#pragma mark -
-
-- (void)logRect:(CGRect)rect withName:(NSString *)name {
-    DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-}
-
-- (void)logLayout {
-    DebugLog(@"#### PZPhotoView ###");
-    
-    [self logRect:self.bounds withName:@"self.bounds"];
-    [self logRect:self.frame withName:@"self.frame"];
-    
-    DebugLog(@"contentSize: %f, %f", self.contentSize.width, self.contentSize.height);
-    DebugLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
-    DebugLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
 }
 
 @end

@@ -12,5 +12,6 @@
 
 @property (readonly) NSUInteger count;
 
-- (void)photoForIndex:(NSUInteger)index withCompletionBlock:(void (^)(UIImage *, NSError *))completionBlock ;
+- (void)photoForIndex:(NSUInteger)index withCompletionBlock:(void (^)(UIImage *, NSError *))completionBlock;
+
 @end

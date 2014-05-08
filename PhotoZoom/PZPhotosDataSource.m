@@ -38,7 +38,7 @@
     }
     
     // simulate a delay for downloading a photo
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if (completionBlock) {
             UIImage *photo = self.photos[index];
             completionBlock(photo, nil);
@@ -54,7 +54,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(800, 600), NO, 0.0f);
-        
         
         //// General Declarations
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -87,25 +86,38 @@
         
         //// Bottom Drawing
         CGRect bottomRect = CGRectMake(0, 566, 800, 34);
-        [[UIColor whiteColor] setFill];
-        [bottomContent drawInRect: bottomRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* bottomStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [bottomStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* bottomFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: bottomStyle};
+        
+        [bottomContent drawInRect: bottomRect withAttributes: bottomFontAttributes];
         
         
         //// Label Drawing
         CGRect labelRect = CGRectMake(0, 250, 800, 100);
-        [[UIColor whiteColor] setFill];
-        [labelContent drawInRect: labelRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 72] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* labelStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [labelStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* labelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 72], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: labelStyle};
+        
+        [labelContent drawInRect: labelRect withAttributes: labelFontAttributes];
         
         
         //// Top Drawing
         CGRect topRect = CGRectMake(0, 0, 800, 34);
-        [[UIColor whiteColor] setFill];
-        [topContent drawInRect: topRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* topStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [topStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* topFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: topStyle};
+        
+        [topContent drawInRect: topRect withAttributes: topFontAttributes];
         
         
         //// Cleanup
         CGGradientRelease(gradient);
         CGColorSpaceRelease(colorSpace);
+        
         
         
         image = UIGraphicsGetImageFromCurrentImageContext();
@@ -120,7 +132,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(1200, 900), NO, 0.0f);
-        
         
         //// General Declarations
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -153,25 +164,38 @@
         
         //// Bottom Drawing
         CGRect bottomRect = CGRectMake(0, 866, 1200, 34);
-        [[UIColor whiteColor] setFill];
-        [bottomContent drawInRect: bottomRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* bottomStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [bottomStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* bottomFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: bottomStyle};
+        
+        [bottomContent drawInRect: bottomRect withAttributes: bottomFontAttributes];
         
         
         //// Label Drawing
         CGRect labelRect = CGRectMake(0, 400, 1200, 100);
-        [[UIColor whiteColor] setFill];
-        [labelContent drawInRect: labelRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 72] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* labelStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [labelStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* labelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 72], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: labelStyle};
+        
+        [labelContent drawInRect: labelRect withAttributes: labelFontAttributes];
         
         
         //// Top Drawing
         CGRect topRect = CGRectMake(0, 0, 1200, 34);
-        [[UIColor whiteColor] setFill];
-        [topContent drawInRect: topRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* topStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [topStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* topFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: topStyle};
+        
+        [topContent drawInRect: topRect withAttributes: topFontAttributes];
         
         
         //// Cleanup
         CGGradientRelease(gradient);
         CGColorSpaceRelease(colorSpace);
+        
         
         
         image = UIGraphicsGetImageFromCurrentImageContext();
@@ -186,7 +210,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(1000, 1000), NO, 0.0f);
-        
         
         //// General Declarations
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -219,26 +242,39 @@
         
         //// Bottom Drawing
         CGRect bottomRect = CGRectMake(0, 966, 1000, 34);
-        [[UIColor whiteColor] setFill];
-        [bottomContent drawInRect: bottomRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* bottomStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [bottomStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* bottomFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: bottomStyle};
+        
+        [bottomContent drawInRect: bottomRect withAttributes: bottomFontAttributes];
         
         
         //// Label Drawing
         CGRect labelRect = CGRectMake(0, 450, 1000, 100);
-        [[UIColor whiteColor] setFill];
-        [labelContent drawInRect: labelRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 72] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* labelStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [labelStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* labelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 72], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: labelStyle};
+        
+        [labelContent drawInRect: labelRect withAttributes: labelFontAttributes];
         
         
         //// Top Drawing
         CGRect topRect = CGRectMake(0, 0, 1000, 34);
-        [[UIColor whiteColor] setFill];
-        [topContent drawInRect: topRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* topStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [topStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* topFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: topStyle};
+        
+        [topContent drawInRect: topRect withAttributes: topFontAttributes];
         
         
         //// Cleanup
         CGGradientRelease(gradient);
         CGColorSpaceRelease(colorSpace);
         
+
         
         image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
@@ -285,25 +321,38 @@
         
         //// Bottom Drawing
         CGRect bottomRect = CGRectMake(0, 1966, 1000, 34);
-        [[UIColor whiteColor] setFill];
-        [bottomContent drawInRect: bottomRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* bottomStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [bottomStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* bottomFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: bottomStyle};
+        
+        [bottomContent drawInRect: bottomRect withAttributes: bottomFontAttributes];
         
         
         //// Label Drawing
         CGRect labelRect = CGRectMake(0, 950, 1000, 100);
-        [[UIColor whiteColor] setFill];
-        [labelContent drawInRect: labelRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 72] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* labelStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [labelStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* labelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 72], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: labelStyle};
+        
+        [labelContent drawInRect: labelRect withAttributes: labelFontAttributes];
         
         
         //// Top Drawing
         CGRect topRect = CGRectMake(0, 0, 1000, 34);
-        [[UIColor whiteColor] setFill];
-        [topContent drawInRect: topRect withFont: [UIFont fontWithName: @"Helvetica-Bold" size: 24] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        NSMutableParagraphStyle* topStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [topStyle setAlignment: NSTextAlignmentCenter];
+        
+        NSDictionary* topFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica-Bold" size: 24], NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: topStyle};
+        
+        [topContent drawInRect: topRect withAttributes: topFontAttributes];
         
         
         //// Cleanup
         CGGradientRelease(gradient);
         CGColorSpaceRelease(colorSpace);
+        
         
         
         image = UIGraphicsGetImageFromCurrentImageContext();

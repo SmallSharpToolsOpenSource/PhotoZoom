@@ -5,7 +5,7 @@ PhotoZoom
 
 ### Overview
 
-There are lots of photo browsing projects. You can find some on [Cocoa Controols](http://www.cocoacontrols.com/tags/photo) but I
+There are lots of photo browsing projects. You can find some on [Cocoa Controls](http://www.cocoacontrols.com/tags/photo) but I
 did not find them to met my needs. I wanted something that is very simple which could be dropped into an app easily. This solution
 is simply an extension of UIScrollView with the addition of tap gestures.
 
@@ -15,10 +15,10 @@ The project was built by referencing the PhotoScroller and AutoScroll samples fr
 
 In this project the hierarchy goes like the following:
 
-PZViewController -> PZPagingScrollView -> PZPhotoView
+PZViewController -> UICollectionView -> PZPhotoView
 
-The PZViewController implements delegate methods to generate the views which are displayed in a scroll view by
-PZPagingScrollView. These views are all instances of PZPhotoView and one delegate method handles the configuration
+The PZViewController implements delegate methods to generate the views which are displayed in a collection view. 
+These views are all instances of PZPhotoView and one delegate method handles the configuration
 of each instance to display an image. It's possible to implement the delegate methods differently to put anything
 into a paging scroll view. Currently images are generated with a NIB as a palette to keep things self-contained to
 facilitate testing. Downloading actual images could be done next. This approach avoids loading all of the images at
@@ -42,8 +42,20 @@ can implement delegate methods as you need them.
 
 ### Reuse
 
-To use these classes in your own project you only need PZPagingScrollView and PZPhotoView. The rest is just for reference
+To use these classes in your own project you only need PZPhotoView and a collection view. The rest is just for reference
 on how it should work.
+
+## CocoaPods
+
+PhotoZoom is available through [CocoaPods](http://cocoapods.org), to install
+it simply add the following line to your Podfile:
+
+    pod "PhotoZoom"
+
+or
+
+    platform :ios, "7.0"
+    pod 'PhotoZoom', :git => 'https://github.com/brennanMKE/PhotoZoom.git', :tag => '0.0.1'
 
 ### Caveats
 

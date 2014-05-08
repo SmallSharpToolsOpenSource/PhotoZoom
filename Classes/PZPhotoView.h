@@ -12,7 +12,7 @@
 
 @interface PZPhotoView : UIScrollView
 
-@property (assign, nonatomic) id<PZPhotoViewDelegate> photoViewDelegate;
+@property (assign, nonatomic) IBOutlet id<PZPhotoViewDelegate> photoViewDelegate;
 
 - (void)prepareForReuse;
 - (void)displayImage:(UIImage *)image;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		260DCAD7164184C1000C27CD /* Box.png in Resources */ = {isa = PBXBuildFile; fileRef = 260DCAD6164184C1000C27CD /* Box.png */; };
+		2615071C191B0BCA00D31BF6 /* PZPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2615071B191B0BCA00D31BF6 /* PZPhotoView.m */; };
 		266ED208164DD72C00FAC72C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266ED207164DD72C00FAC72C /* QuartzCore.framework */; };
 		266ED20F164DE24600FAC72C /* PZPagingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 266ED20E164DE24600FAC72C /* PZPagingScrollView.m */; };
 		269FEE1E163C714600EB8347 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE1D163C714600EB8347 /* UIKit.framework */; };
@@ -18,18 +19,17 @@
 		269FEE2E163C714600EB8347 /* PZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE2D163C714600EB8347 /* PZAppDelegate.m */; };
 		269FEE37163C714600EB8347 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 269FEE35163C714600EB8347 /* MainStoryboard.storyboard */; };
 		269FEE3A163C714600EB8347 /* PZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE39163C714600EB8347 /* PZViewController.m */; };
-		269FEE42163C714600EB8347 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE41163C714600EB8347 /* SenTestingKit.framework */; };
 		269FEE43163C714600EB8347 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE1D163C714600EB8347 /* UIKit.framework */; };
 		269FEE44163C714600EB8347 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 269FEE1F163C714600EB8347 /* Foundation.framework */; };
 		269FEE4C163C714600EB8347 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269FEE4A163C714600EB8347 /* InfoPlist.strings */; };
 		269FEE4F163C714600EB8347 /* PhotoZoomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE4E163C714600EB8347 /* PhotoZoomTests.m */; };
-		269FEE65163CA97800EB8347 /* PZPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 269FEE64163CA97800EB8347 /* PZPhotoView.m */; };
 		26FD6CCA173959EF007310A6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FD6CC5173959EE007310A6 /* Default.png */; };
 		26FD6CCB173959EF007310A6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FD6CC6173959EE007310A6 /* Default@2x.png */; };
 		26FD6CCC173959EF007310A6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FD6CC7173959EE007310A6 /* Default-568h@2x.png */; };
 		26FD6CCD173959EF007310A6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FD6CC8173959EF007310A6 /* Icon.png */; };
 		26FD6CCE173959EF007310A6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26FD6CC9173959EF007310A6 /* Icon@2x.png */; };
 		26FD6CD117397451007310A6 /* PZPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 26FD6CD017397451007310A6 /* PZPhotosDataSource.m */; };
+		948BB4FD8D7A4C89BB949B0E /* libPods-PhotoZoom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7181EB0C4E475CB4042BC7 /* libPods-PhotoZoom.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A7181EB0C4E475CB4042BC7 /* libPods-PhotoZoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoZoom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		260DCAD6164184C1000C27CD /* Box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box.png; sourceTree = "<group>"; };
+		2615071A191B0BCA00D31BF6 /* PZPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PZPhotoView.h; path = Classes/PZPhotoView.h; sourceTree = SOURCE_ROOT; };
+		2615071B191B0BCA00D31BF6 /* PZPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PZPhotoView.m; path = Classes/PZPhotoView.m; sourceTree = SOURCE_ROOT; };
 		266ED207164DD72C00FAC72C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		266ED20D164DE24600FAC72C /* PZPagingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPagingScrollView.h; sourceTree = "<group>"; };
 		266ED20E164DE24600FAC72C /* PZPagingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPagingScrollView.m; sourceTree = "<group>"; };
@@ -60,14 +63,11 @@
 		269FEE36163C714600EB8347 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		269FEE38163C714600EB8347 /* PZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PZViewController.h; sourceTree = "<group>"; };
 		269FEE39163C714600EB8347 /* PZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PZViewController.m; sourceTree = "<group>"; };
-		269FEE40163C714600EB8347 /* PhotoZoomTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoZoomTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		269FEE41163C714600EB8347 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		269FEE40163C714600EB8347 /* PhotoZoomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoZoomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		269FEE49163C714600EB8347 /* PhotoZoomTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PhotoZoomTests-Info.plist"; sourceTree = "<group>"; };
 		269FEE4B163C714600EB8347 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		269FEE4D163C714600EB8347 /* PhotoZoomTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoZoomTests.h; sourceTree = "<group>"; };
 		269FEE4E163C714600EB8347 /* PhotoZoomTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoZoomTests.m; sourceTree = "<group>"; };
-		269FEE63163CA97800EB8347 /* PZPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPhotoView.h; sourceTree = "<group>"; };
-		269FEE64163CA97800EB8347 /* PZPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPhotoView.m; sourceTree = "<group>"; };
 		269FEE6A163F7CD000EB8347 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		26FD6CC5173959EE007310A6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		26FD6CC6173959EE007310A6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -76,6 +76,7 @@
 		26FD6CC9173959EF007310A6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		26FD6CCF17397451007310A6 /* PZPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PZPhotosDataSource.h; sourceTree = "<group>"; };
 		26FD6CD017397451007310A6 /* PZPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PZPhotosDataSource.m; sourceTree = "<group>"; };
+		A3F243E75B6F42BC84E3E523 /* Pods-PhotoZoom.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoZoom.xcconfig"; path = "Pods/Pods-PhotoZoom.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +88,7 @@
 				269FEE1E163C714600EB8347 /* UIKit.framework in Frameworks */,
 				269FEE20163C714600EB8347 /* Foundation.framework in Frameworks */,
 				269FEE22163C714600EB8347 /* CoreGraphics.framework in Frameworks */,
+				948BB4FD8D7A4C89BB949B0E /* libPods-PhotoZoom.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +96,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				269FEE42163C714600EB8347 /* SenTestingKit.framework in Frameworks */,
 				269FEE43163C714600EB8347 /* UIKit.framework in Frameworks */,
 				269FEE44163C714600EB8347 /* Foundation.framework in Frameworks */,
 			);
@@ -103,6 +104,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26150719191B0BB000D31BF6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2615071A191B0BCA00D31BF6 /* PZPhotoView.h */,
+				2615071B191B0BCA00D31BF6 /* PZPhotoView.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		269FEE0E163C714600EB8347 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +121,7 @@
 				269FEE47163C714600EB8347 /* PhotoZoomTests */,
 				269FEE1C163C714600EB8347 /* Frameworks */,
 				269FEE1A163C714600EB8347 /* Products */,
+				A3F243E75B6F42BC84E3E523 /* Pods-PhotoZoom.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				269FEE19163C714600EB8347 /* PhotoZoom.app */,
-				269FEE40163C714600EB8347 /* PhotoZoomTests.octest */,
+				269FEE40163C714600EB8347 /* PhotoZoomTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,8 +140,8 @@
 				269FEE1D163C714600EB8347 /* UIKit.framework */,
 				269FEE1F163C714600EB8347 /* Foundation.framework */,
 				269FEE21163C714600EB8347 /* CoreGraphics.framework */,
-				269FEE41163C714600EB8347 /* SenTestingKit.framework */,
 				266ED207164DD72C00FAC72C /* QuartzCore.framework */,
+				0A7181EB0C4E475CB4042BC7 /* libPods-PhotoZoom.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,14 +149,13 @@
 		269FEE23163C714600EB8347 /* PhotoZoom */ = {
 			isa = PBXGroup;
 			children = (
+				26150719191B0BB000D31BF6 /* Classes */,
 				269FEE24163C714600EB8347 /* Supporting Files */,
 				269FEE2C163C714600EB8347 /* PZAppDelegate.h */,
 				269FEE2D163C714600EB8347 /* PZAppDelegate.m */,
 				269FEE35163C714600EB8347 /* MainStoryboard.storyboard */,
 				269FEE38163C714600EB8347 /* PZViewController.h */,
 				269FEE39163C714600EB8347 /* PZViewController.m */,
-				269FEE63163CA97800EB8347 /* PZPhotoView.h */,
-				269FEE64163CA97800EB8347 /* PZPhotoView.m */,
 				266ED20D164DE24600FAC72C /* PZPagingScrollView.h */,
 				266ED20E164DE24600FAC72C /* PZPagingScrollView.m */,
 				26FD6CCF17397451007310A6 /* PZPhotosDataSource.h */,
@@ -197,9 +207,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 269FEE52163C714600EB8347 /* Build configuration list for PBXNativeTarget "PhotoZoom" */;
 			buildPhases = (
+				60C736F7DEAF4EDBABA77EDF /* Check Pods Manifest.lock */,
 				269FEE15163C714600EB8347 /* Sources */,
 				269FEE16163C714600EB8347 /* Frameworks */,
 				269FEE17163C714600EB8347 /* Resources */,
+				EDC080AE05194A93A30010B1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -226,8 +238,8 @@
 			);
 			name = PhotoZoomTests;
 			productName = PhotoZoomTests;
-			productReference = 269FEE40163C714600EB8347 /* PhotoZoomTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 269FEE40163C714600EB8347 /* PhotoZoomTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -236,6 +248,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PZ;
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "SmallSharptools LLC";
 			};
@@ -297,6 +310,36 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		60C736F7DEAF4EDBABA77EDF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EDC080AE05194A93A30010B1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-PhotoZoom-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -307,7 +350,7 @@
 				269FEE2A163C714600EB8347 /* main.m in Sources */,
 				269FEE2E163C714600EB8347 /* PZAppDelegate.m in Sources */,
 				269FEE3A163C714600EB8347 /* PZViewController.m in Sources */,
-				269FEE65163CA97800EB8347 /* PZPhotoView.m in Sources */,
+				2615071C191B0BCA00D31BF6 /* PZPhotoView.m in Sources */,
 				266ED20F164DE24600FAC72C /* PZPagingScrollView.m in Sources */,
 				26FD6CD117397451007310A6 /* PZPhotosDataSource.m in Sources */,
 			);
@@ -413,11 +456,18 @@
 		};
 		269FEE53163C714600EB8347 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3F243E75B6F42BC84E3E523 /* Pods-PhotoZoom.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoZoom/PhotoZoom-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../Classes",
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/Reveal-iOS-SDK\"",
+				);
 				INFOPLIST_FILE = "PhotoZoom/PhotoZoom-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -425,11 +475,18 @@
 		};
 		269FEE54163C714600EB8347 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3F243E75B6F42BC84E3E523 /* Pods-PhotoZoom.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoZoom/PhotoZoom-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../Classes",
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/Reveal-iOS-SDK\"",
+				);
 				INFOPLIST_FILE = "PhotoZoom/PhotoZoom-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -442,13 +499,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoZoom/PhotoZoom-Prefix.pch";
 				INFOPLIST_FILE = "PhotoZoomTests/PhotoZoomTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -459,13 +516,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoZoom/PhotoZoom-Prefix.pch";
 				INFOPLIST_FILE = "PhotoZoomTests/PhotoZoomTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

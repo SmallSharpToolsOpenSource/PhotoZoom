@@ -85,7 +85,7 @@
 
 - (CGSize)contentSizeForPagingScrollView {
     // We have to use the paging scroll view's bounds to calculate the contentSize, for the same reason outlined above.
-    NSAssert(self.pagingViewDelegate != nil, @"Invalid State");
+    NSCAssert(self.pagingViewDelegate != nil, @"Invalid State");
     NSUInteger count = [self.pagingViewDelegate pagingScrollViewPagingViewCount:self];
     
     return CGSizeMake(self.bounds.size.width * count, self.bounds.size.height);
@@ -102,7 +102,7 @@
 }
 
 - (void)configurePage:(UIView *)page forIndex:(NSUInteger)index {
-    NSAssert(self.pagingViewDelegate != nil, @"Invalid State");
+    NSCAssert(self.pagingViewDelegate != nil, @"Invalid State");
     
     if (self.pagingViewDelegate != nil) {
         [self.pagingViewDelegate pagingScrollView:self preparePageViewForDisplay:page forIndex:index];
@@ -118,13 +118,13 @@
         return;
     }
     
-    NSAssert(self.pagingViewDelegate != nil, @"Invalid State");
+    NSCAssert(self.pagingViewDelegate != nil, @"Invalid State");
     NSUInteger count = [self.pagingViewDelegate pagingScrollViewPagingViewCount:self];
     
     // Calculate which pages are visible
     CGRect visibleBounds = self.bounds;
-    int firstNeededPageIndex = floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds));
-    int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
+    NSUInteger firstNeededPageIndex = floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds));
+    NSUInteger lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
     firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
     lastNeededPageIndex  = MIN(lastNeededPageIndex, count - 1);
     
@@ -139,7 +139,7 @@
     [self.visiblePages minusSet:self.recycledPages];
     
     // add missing pages
-    for (int index = firstNeededPageIndex; index <= lastNeededPageIndex; index++) {
+    for (NSUInteger index = firstNeededPageIndex; index <= lastNeededPageIndex; index++) {
         if (![self isDisplayingPageForIndex:index]) {
             UIView *page = [self dequeueRecycledPage:index];
             [self configurePage:page forIndex:index];
@@ -152,20 +152,7 @@
 #pragma mark - Layout Debugging Support
 #pragma mark -
 
-- (void)logRect:(CGRect)rect withName:(NSString *)name {
-    DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-}
-
 - (void)logLayout {
-    DebugLog(@"#### PZPagingScrollView ###");
-    
-    [self logRect:self.bounds withName:@"self.bounds"];
-    [self logRect:self.frame withName:@"self.frame"];
-    
-    DebugLog(@"contentSize: %f, %f", self.contentSize.width, self.contentSize.height);
-    DebugLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
-    DebugLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
-    
     if ([self.visiblePageView respondsToSelector:@selector(logLayout)]) {
         [self.visiblePageView performSelector:@selector(logLayout)];
     }
@@ -177,7 +164,7 @@
 - (UIView *)dequeueRecycledPage:(NSUInteger)index {
     UIView *page = nil;
     
-    NSAssert(self.pagingViewDelegate != nil, @"Invalid State");
+    NSCAssert(self.pagingViewDelegate != nil, @"Invalid State");
     
     if (self.pagingViewDelegate != nil) {
         for (UIView *recycledPage in self.recycledPages) {
@@ -228,9 +215,9 @@
 }
 
 - (void)displayPagingViewAtIndex:(NSUInteger)index {
-    NSAssert([self conformsToProtocol:@protocol(UIScrollViewDelegate)], @"Invalid State");
-    NSAssert(self.delegate == self, @"Invalid State");
-    NSAssert(self.pagingViewDelegate != nil, @"Invalid State");
+    NSCAssert([self conformsToProtocol:@protocol(UIScrollViewDelegate)], @"Invalid State");
+    NSCAssert(self.delegate == self, @"Invalid State");
+    NSCAssert(self.pagingViewDelegate != nil, @"Invalid State");
     
     _currentPagingIndex = index;
     
@@ -242,7 +229,7 @@
 
 - (void)resetDisplay {
     NSUInteger count = [self.pagingViewDelegate pagingScrollViewPagingViewCount:self];
-    NSAssert(_currentPagingIndex < count, @"Invalid State");
+    NSCAssert(_currentPagingIndex < count, @"Invalid State");
     
     self.contentSize = [self contentSizeForPagingScrollView];
     [self setContentOffset:[self scrollPositionForIndex:_currentPagingIndex] animated:FALSE];
