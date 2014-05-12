@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PhotoZoom"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Photo viewing view which allows for tapping and zooming like Apple's iPhoto."
 
   s.description  = <<-DESC
@@ -18,7 +18,7 @@ you want to allow an image to be pinched and zoomed. The sample project shows ho
   s.social_media_url = "http://twitter.com/smallsharptools"
 
   s.platform     = :ios, '6.0'
-  s.source       = { :git => "https://github.com/brennanMKE/PhotoZoom.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/brennanMKE/PhotoZoom.git", :tag => "0.0.2" }
   s.source_files  = 'Classes/**/*.{h,m}'
   s.requires_arc = true
 

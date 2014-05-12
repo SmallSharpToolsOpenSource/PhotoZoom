@@ -42,7 +42,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JF4-ts-B8O">
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JF4-ts-B8O">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="hZ0-Fc-7hO">
@@ -59,7 +59,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SCx-lZ-Uoj" customClass="PZPhotoView">
+                                                <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SCx-lZ-Uoj" customClass="PZPhotoView">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -70,6 +70,13 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="SCx-lZ-Uoj" firstAttribute="top" secondItem="WyO-N3-Zts" secondAttribute="top" id="cML-OE-4CI"/>
+                                            <constraint firstAttribute="trailing" secondItem="SCx-lZ-Uoj" secondAttribute="trailing" id="j63-nq-hb8"/>
+                                            <constraint firstAttribute="bottom" secondItem="SCx-lZ-Uoj" secondAttribute="bottom" id="wQm-Cn-P2y"/>
+                                            <constraint firstItem="SCx-lZ-Uoj" firstAttribute="leading" secondItem="WyO-N3-Zts" secondAttribute="leading" id="yGM-jv-EzS"/>
+                                        </constraints>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -77,8 +84,45 @@
                                     <outlet property="delegate" destination="2" id="1xa-3m-n9d"/>
                                 </connections>
                             </collectionView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Y7-nA-vKp" userLabel="Screen View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KOJ-qk-bTc" userLabel="Rotation Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2z-Du-wre">
+                                <rect key="frame" x="20" y="486" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Take Screenshot">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="takeScreenshot:" destination="2" eventType="touchUpInside" id="qld-bh-CCN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="JF4-ts-B8O" secondAttribute="bottom" id="4JZ-uF-xMC"/>
+                            <constraint firstAttribute="trailing" secondItem="Z2z-Du-wre" secondAttribute="trailing" constant="20" symbolic="YES" id="77N-WZ-Hgj"/>
+                            <constraint firstItem="7Y7-nA-vKp" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="8aB-U7-OvL"/>
+                            <constraint firstItem="JF4-ts-B8O" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="9Bv-h9-63i"/>
+                            <constraint firstItem="JF4-ts-B8O" firstAttribute="top" secondItem="3" secondAttribute="top" id="D67-H3-Jmj"/>
+                            <constraint firstAttribute="bottom" secondItem="7Y7-nA-vKp" secondAttribute="bottom" id="Jjy-D6-WwU"/>
+                            <constraint firstItem="ic8-IT-M10" firstAttribute="top" secondItem="Z2z-Du-wre" secondAttribute="bottom" constant="20" symbolic="YES" id="NfU-BM-CiD"/>
+                            <constraint firstItem="Z2z-Du-wre" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" id="Nrr-qH-ZXt"/>
+                            <constraint firstItem="KOJ-qk-bTc" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="OLf-hD-0Pu"/>
+                            <constraint firstAttribute="trailing" secondItem="KOJ-qk-bTc" secondAttribute="trailing" id="XBn-K6-7VY"/>
+                            <constraint firstItem="KOJ-qk-bTc" firstAttribute="top" secondItem="3" secondAttribute="top" id="Y1R-jQ-fhw"/>
+                            <constraint firstAttribute="bottom" secondItem="KOJ-qk-bTc" secondAttribute="bottom" id="bos-pe-CxG"/>
+                            <constraint firstAttribute="trailing" secondItem="JF4-ts-B8O" secondAttribute="trailing" id="jIj-gu-6t7"/>
+                            <constraint firstAttribute="trailing" secondItem="7Y7-nA-vKp" secondAttribute="trailing" id="oba-9E-G1r"/>
+                            <constraint firstItem="7Y7-nA-vKp" firstAttribute="top" secondItem="3" secondAttribute="top" id="tHI-ge-Ssb"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="PhotoZoom" id="aiS-Qw-Eli"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -86,6 +130,8 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="collectionView" destination="JF4-ts-B8O" id="F0u-Ud-8gl"/>
+                        <outlet property="rotationImageView" destination="KOJ-qk-bTc" id="Ij0-e4-KUF"/>
+                        <outlet property="screenView" destination="7Y7-nA-vKp" id="ZU3-cz-lTy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>

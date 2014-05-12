@@ -4,4 +4,7 @@
 
 Podspec release.
 
+## 0.0.2
+
+Fix for displaying activity indicator.
 

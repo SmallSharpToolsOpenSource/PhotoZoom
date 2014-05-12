@@ -125,6 +125,7 @@
     }
     
     self.imageView = nil;
+    self.activityIndicator = nil;
 }
 
 - (void)displayImage:(UIImage *)image {

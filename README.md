@@ -55,7 +55,7 @@ it simply add the following line to your Podfile:
 or
 
     platform :ios, "7.0"
-    pod 'PhotoZoom', :git => 'https://github.com/brennanMKE/PhotoZoom.git', :tag => '0.0.1'
+    pod 'PhotoZoom', :git => 'https://github.com/brennanMKE/PhotoZoom.git', :tag => '0.0.2'
 
 ### Caveats
 
