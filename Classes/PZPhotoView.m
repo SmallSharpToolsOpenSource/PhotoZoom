@@ -129,8 +129,7 @@
 }
 
 - (void)displayImage:(UIImage *)image {
-    NSCAssert(self.photoViewDelegate != nil, @"Invalid State");
-    
+
     if (self.imageView) {
         [self.imageView removeFromSuperview];
         self.imageView = nil;
@@ -191,7 +190,7 @@
 #pragma mark -
 
 - (void)handleSingleTap:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.photoViewDelegate != nil) {
+    if (self.photoViewDelegate != nil && [self.photoViewDelegate respondsToSelector:@selector(photoViewDidSingleTap:)]) {
         [self.photoViewDelegate photoViewDidSingleTap:self];
     }
 }
@@ -207,7 +206,7 @@
         [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
     }
     
-    if (self.photoViewDelegate != nil) {
+    if (self.photoViewDelegate != nil && [self.photoViewDelegate respondsToSelector:@selector(photoViewDidDoubleTap:)]) {
         [self.photoViewDelegate photoViewDidDoubleTap:self];
     }
 }
@@ -217,19 +216,19 @@
     CGFloat newScale = MAX([self zoomScale] / kZoomStep, self.minimumZoomScale);
     [self updateZoomScaleWithGesture:gestureRecognizer newScale:newScale];
     
-    if (self.photoViewDelegate != nil) {
+    if (self.photoViewDelegate != nil && [self.photoViewDelegate respondsToSelector:@selector(photoViewDidTwoFingerTap:)]) {
         [self.photoViewDelegate photoViewDidTwoFingerTap:self];
     }
 }
 
 - (void)handleDoubleTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.photoViewDelegate != nil) {
+    if (self.photoViewDelegate != nil && [self.photoViewDelegate respondsToSelector:@selector(photoViewDidDoubleTwoFingerTap:)]) {
         [self.photoViewDelegate photoViewDidDoubleTwoFingerTap:self];
     }
 }
 
 - (void)handleScrollViewSingleTap:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.photoViewDelegate != nil) {
+    if (self.photoViewDelegate != nil && [self.photoViewDelegate respondsToSelector:@selector(photoViewDidSingleTap:)]) {
         [self.photoViewDelegate photoViewDidSingleTap:self];
     }
 }
