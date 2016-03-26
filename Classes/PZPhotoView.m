@@ -159,8 +159,6 @@
     [self.imageView addGestureRecognizer:twoFingerTap];
     [self.imageView addGestureRecognizer:doubleTwoFingerTap];
     
-    self.imageView.backgroundColor = [UIColor greenColor];
-    
     self.contentSize = self.imageView.frame.size;
     
     [self setMaxMinZoomScalesForCurrentBounds];
